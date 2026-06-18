@@ -10,24 +10,41 @@ package model.entity;
  */
 public class UserImpl implements User {
     
-    private String id;
+    private int id;
+    private String username;
     private String email;
 
-    public UserImpl(String id, String email) {
+    public UserImpl(int id, String username, String email) {
         this.id = id;
+        this.username = username;
         this.email = email;
+        
+    }
+    
+    public UserImpl(int id){
+        this(id, null, null);
     }
 
     @Override
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     @Override
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
     @Override
     public String getEmail() {
         return email;
@@ -40,7 +57,7 @@ public class UserImpl implements User {
     
     @Override
     public String toString(){
-        return this.id;
+        return this.username;
     }
     
 }

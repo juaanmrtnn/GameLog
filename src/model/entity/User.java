@@ -12,10 +12,14 @@ import java.io.Serializable;
  */
 public interface User extends Serializable {
     
-    public String getId();
+    public int getId();
 
-    public void setId(String id);
+    public void setId(int id);
 
+    public String getUsername();
+    
+    public void setUsername(String username);
+    
     public String getEmail();
 
     public void setEmail(String email);
