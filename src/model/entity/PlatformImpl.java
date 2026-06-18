@@ -10,12 +10,23 @@ package model.entity;
  */
 public class PlatformImpl implements Platform{
     
+    private int id;
     private String platform;
 
     public PlatformImpl(String platform) {
         this.platform = platform;
     }
 
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     @Override
     public String getPlatform() {
         return platform;

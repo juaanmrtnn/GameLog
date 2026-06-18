@@ -16,4 +16,7 @@ public interface Platform extends Serializable {
 
     public void setPlatform(String platform);
     
+    public int getId();
+
+    public void setId(int id);
 }

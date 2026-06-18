@@ -12,17 +12,21 @@ import java.io.Serializable;
  */
 public interface GameTrack extends Serializable {
     
-    public String getUserId();
+    public int getId();
 
-    public void setUserId(String user_id);
+    public void setId(int id);
+    
+    public int getUserId();
 
-    public String getGame();
+    public void setUserId(int user_id);
 
-    public void setGame(String game);
+    public int getGameId();
+    
+    public void setGameId(int game_id);
 
-    public Platform getPlatform();
-
-    public void setPlatform(Platform platform);
+    public int getPlatformId();
+    
+    public void setPlatformId(int platform_id);
             
     public String getProgress();
 
