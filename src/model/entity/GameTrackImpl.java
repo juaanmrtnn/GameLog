@@ -13,14 +13,14 @@ public class GameTrackImpl implements GameTrack {
     private String game;
     private Platform platform;
     private Progress progress;
-    private Double hours_played;
+    private Double played_hours;
 
-    public GameTrackImpl(String user_id, String game, Platform platform, Progress progress, Double hours_played) {
+    public GameTrackImpl(String user_id, String game, Platform platform, Progress progress, Double played_hours) {
         this.user_id = user_id;
         this.game = game;
         this.platform = platform;
         this.progress = progress;
-        this.hours_played = hours_played;
+        this.played_hours = played_hours;
     }
 
     @Override
@@ -64,19 +64,15 @@ public class GameTrackImpl implements GameTrack {
     }
 
     @Override
-    public Double getHoursPlayed() {
-        return hours_played;
+    public Double getPlayedHours() {
+        return played_hours;
     }
 
     @Override
-    public void setHoursPlayed(Double hours_played) {
-        this.hours_played = hours_played;
+    public void setPlayedHours(Double played_hours) {
+        this.played_hours = played_hours;
     }
 
-    @Override
-    public String toString() {
-        return "GameTrackImpl{" + "user_id=" + user_id + ", game=" + game + ", platform=" + platform + ", progress=" + progress + ", hours_played=" + hours_played + '}';
-    }
     
     
 }

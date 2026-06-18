@@ -16,9 +16,9 @@ public interface Game extends Serializable {
 
     public void setId(String id);
 
-    public String getTittle();
+    public String getTitle();
 
-    public void setTittle(String tittle);
+    public void setTitle(String title);
 
     public String getStudio();
 

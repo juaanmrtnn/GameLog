@@ -11,13 +11,13 @@ package model.entity;
 public class GameImpl implements Game {
     
     private String id;
-    private String tittle;
+    private String title;
     private String studio;
     private int launch_year;
 
-    public GameImpl(String id, String tittle, String studio, int launch_year) {
+    public GameImpl(String id, String title, String studio, int launch_year) {
         this.id = id;
-        this.tittle = tittle;
+        this.title = title;
         this.studio = studio;
         this.launch_year = launch_year;
     }
@@ -37,13 +37,13 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
     @Override
-    public void setTittle(String tittle) {
-        this.tittle = tittle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
@@ -68,6 +68,6 @@ public class GameImpl implements Game {
     
     @Override
     public String toString(){
-        return this.tittle;
+        return this.title;
     }
 }

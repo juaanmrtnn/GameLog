@@ -28,7 +28,7 @@ public interface GameTrack extends Serializable {
 
     public void setProgress(Progress progress);
 
-    public Double getHoursPlayed();
+    public Double getPlayedHours();
 
-    public void setHoursPlayed(Double hours_played);
+    public void setPlayedHours(Double played_hours);
 }
