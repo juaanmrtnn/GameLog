@@ -12,10 +12,10 @@ public class GameTrackImpl implements GameTrack {
     private String user_id;
     private String game;
     private Platform platform;
-    private Progress progress;
+    private String progress;
     private Double played_hours;
 
-    public GameTrackImpl(String user_id, String game, Platform platform, Progress progress, Double played_hours) {
+    public GameTrackImpl(String user_id, String game, Platform platform, String progress, Double played_hours) {
         this.user_id = user_id;
         this.game = game;
         this.platform = platform;
@@ -54,12 +54,12 @@ public class GameTrackImpl implements GameTrack {
     }
 
     @Override
-    public Progress getProgress() {
+    public String getProgress() {
         return progress;
     }
 
     @Override
-    public void setProgress(Progress progress) {
+    public void setProgress(String progress) {
         this.progress = progress;
     }
 

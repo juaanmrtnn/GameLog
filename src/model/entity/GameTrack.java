@@ -24,9 +24,9 @@ public interface GameTrack extends Serializable {
 
     public void setPlatform(Platform platform);
             
-    public Progress getProgress();
+    public String getProgress();
 
-    public void setProgress(Progress progress);
+    public void setProgress(String progress);
 
     public Double getPlayedHours();
 
