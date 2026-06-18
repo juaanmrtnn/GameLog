@@ -18,15 +18,15 @@ public interface GameTrack extends Serializable {
     
     public int getUserId();
 
-    public void setUserId(int user_id);
+    public void setUserId(int userId);
 
     public int getGameId();
     
-    public void setGameId(int game_id);
+    public void setGameId(int gameId);
 
     public int getPlatformId();
     
-    public void setPlatformId(int platform_id);
+    public void setPlatformId(int platformId);
             
     public String getProgress();
 
@@ -34,5 +34,5 @@ public interface GameTrack extends Serializable {
 
     public Double getPlayedHours();
 
-    public void setPlayedHours(Double played_hours);
+    public void setPlayedHours(Double playedHours);
 }

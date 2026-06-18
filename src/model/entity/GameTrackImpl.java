@@ -10,19 +10,19 @@ package model.entity;
  */
 public class GameTrackImpl implements GameTrack {
     private int id;
-    private int user_id;
-    private int game_id;
-    private int platform_id;
+    private int userId;
+    private int gameId;
+    private int platformId;
     private String progress;
-    private Double played_hours;
+    private Double playedHours;
 
-    public GameTrackImpl(int id, int user_id, int game_id, int platform_id, String progress, Double played_hours) {
+    public GameTrackImpl(int id, int userId, int gameId, int platformId, String progress, Double playedHours) {
         this.id = id;
-        this.user_id = user_id;
-        this.game_id = game_id;
-        this.platform_id = platform_id;
+        this.userId = userId;
+        this.gameId = gameId;
+        this.platformId = platformId;
         this.progress = progress;
-        this.played_hours = played_hours;
+        this.playedHours = playedHours;
     }
 
     public int getId() {
@@ -35,32 +35,32 @@ public class GameTrackImpl implements GameTrack {
     
     @Override
     public int getUserId() {
-        return user_id;
+        return userId;
     }
 
     @Override
-    public void setUserId(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override
     public int getGameId() {
-        return game_id;
+        return gameId;
     }
 
     @Override
-    public void setGameId(int game_id) {
-        this.game_id = game_id;
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
     }
 
     @Override
     public int getPlatformId() {
-        return platform_id;
+        return platformId;
     }
 
     @Override
-    public void setPlatformId(int platform_id) {
-        this.platform_id = platform_id;
+    public void setPlatformId(int platformId) {
+        this.platformId = platformId;
     }
 
     @Override
@@ -75,12 +75,12 @@ public class GameTrackImpl implements GameTrack {
 
     @Override
     public Double getPlayedHours() {
-        return played_hours;
+        return playedHours;
     }
 
     @Override
-    public void setPlayedHours(Double played_hours) {
-        this.played_hours = played_hours;
+    public void setPlayedHours(Double playedHours) {
+        this.playedHours = playedHours;
     }
 
     

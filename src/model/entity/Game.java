@@ -12,9 +12,9 @@ import java.io.Serializable;
  */
 public interface Game extends Serializable {
     
-    public String getId();
+    public int getId();
 
-    public void setId(String id);
+    public void setId(int id);
 
     public String getTitle();
 
@@ -24,8 +24,8 @@ public interface Game extends Serializable {
 
     public void setStudio(String studio);
 
-    public int getLaunch_year();
+    public int getLaunchYear();
 
-    public void setLaunch_year(int launch_year);
+    public void setLaunchYear(int launchYear);
 
 }

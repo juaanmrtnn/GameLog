@@ -10,29 +10,29 @@ package model.entity;
  */
 public class GameImpl implements Game {
     
-    private String id;
+    private int id;
     private String title;
     private String studio;
-    private int launch_year;
+    private int launchYear;
 
-    public GameImpl(String id, String title, String studio, int launch_year) {
+    public GameImpl(int id, String title, String studio, int launchYear) {
         this.id = id;
         this.title = title;
         this.studio = studio;
-        this.launch_year = launch_year;
+        this.launchYear = launchYear;
     }
     
-    public GameImpl(String id){
+    public GameImpl(int id){
         this(id, null, null, 0);
     }
 
     @Override
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     @Override
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -57,13 +57,13 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public int getLaunch_year() {
-        return launch_year;
+    public int getLaunchYear() {
+        return launchYear;
     }
 
     @Override
-    public void setLaunch_year(int launch_year) {
-        this.launch_year = launch_year;
+    public void setLaunchYear(int launchYear) {
+        this.launchYear = launchYear;
     }
     
     @Override
