@@ -4,12 +4,16 @@
  */
 package view.game;
 
+import controller.GameController;
+
 /**
  *
  * @author juanito
  */
 public class GameViewImpl extends javax.swing.JPanel {
 
+    
+    private GameController controller;
     /**
      * Creates new form GameViewImpl
      */
