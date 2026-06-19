@@ -13,11 +13,13 @@ import controller.UserController;
 public class UserViewImpl extends javax.swing.JPanel implements UserView {
 
     private UserController controller;
+    private UserTableModel userTableModel;
     
     /**
      * Creates new form UserViewImpl
      */
     public UserViewImpl() {
+        userTableModel = new UserTableModel();
         initComponents();
     }
 
@@ -33,17 +35,7 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
         jScrollPane1 = new javax.swing.JScrollPane();
         usersTable = new javax.swing.JTable();
 
-        usersTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        usersTable.setModel(userTableModel);
         jScrollPane1.setViewportView(usersTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -81,7 +73,17 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
     // End of variables declaration//GEN-END:variables
 
     @Override
+    public void dataModelChanged() {
+        userTableModel.setUsers(this.getController().listUsersGesture());
+    }
+    
+    @Override
     public void display() {
-        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                setVisible(true);
+                dataModelChanged();
+            }
+        });
     }
 }

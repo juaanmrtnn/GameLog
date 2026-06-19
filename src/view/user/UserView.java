@@ -17,4 +17,6 @@ public interface UserView {
     public void setController(UserController controller);
     
     public void display();
+    
+    public void dataModelChanged();
 }
