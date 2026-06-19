@@ -15,4 +15,6 @@ public interface UserView {
     public UserController getController();
     
     public void setController(UserController controller);
+    
+    public void display();
 }

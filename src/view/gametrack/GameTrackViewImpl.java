@@ -4,11 +4,13 @@
  */
 package view.gametrack;
 
+import controller.GameTrackController;
+
 /**
  *
  * @author juanito
  */
-public class GameTrackViewImpl extends javax.swing.JPanel {
+public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackView {
 
     /**
      * Creates new form GameTrackViewImpl
@@ -37,6 +39,21 @@ public class GameTrackViewImpl extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    @Override
+    public GameTrackController getController() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void setController(GameTrackController controller) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void display() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

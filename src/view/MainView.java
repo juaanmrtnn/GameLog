@@ -4,17 +4,32 @@
  */
 package view;
 
+import javax.swing.JPanel;
+import view.game.GameView;
+import view.gametrack.GameTrackView;
+import view.user.UserView;
+
 /**
  *
  * @author juanito
  */
 public class MainView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainView
-     */
-    public MainView() {
+    private UserView userView;
+    private GameView gameView;
+    private GameTrackView gameTrackView;
+    
+    public MainView(UserView userView, GameView gameView, GameTrackView gameTrackView) {
+        this.userView = userView;
+        this.gameView = gameView;
+        this.gameTrackView = gameTrackView;
         initComponents();
+        this.jTabbedPane1.add("User Profiles", (JPanel)userView);
+        this.jTabbedPane1.add("Game Catalog", (JPanel)gameView);
+        this.jTabbedPane1.add("My Log", (JPanel)gameTrackView);
+        
+        this.setTitle("GameLog - Personal Gaming Tracker");
+        this.setLocationRelativeTo(null); // center window on screen
     }
 
     /**
@@ -26,17 +41,25 @@ public class MainView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -70,13 +93,20 @@ public class MainView extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
+    }
+    
+    public void display(){
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainView().setVisible(true);
+                setVisible(true);
+                userView.display();
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
+

@@ -52,6 +52,11 @@ public class GameViewImpl extends javax.swing.JPanel implements GameView {
         this.controller = controller;
     }
 
+    @Override
+    public void display() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

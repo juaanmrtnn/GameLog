@@ -79,4 +79,9 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void display() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -16,6 +16,6 @@ public interface GameView {
     
     public void setController(GameController controller);
     
-    
+    public void display();
     
 }

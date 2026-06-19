@@ -4,10 +4,18 @@
  */
 package view.gametrack;
 
+import controller.GameTrackController;
+
 /**
  *
  * @author juanito
  */
 public interface GameTrackView {
+    
+    public GameTrackController getController();
+    
+    public void setController(GameTrackController controller);
+    
+    public void display();
     
 }

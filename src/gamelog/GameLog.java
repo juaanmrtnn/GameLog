@@ -4,6 +4,32 @@
  */
 package gamelog;
 
+import controller.GameController;
+import controller.GameControllerImpl;
+import controller.GameTrackController;
+import controller.GameTrackControllerImpl;
+import controller.PlatformController;
+import controller.PlatformControllerImpl;
+import controller.UserController;
+import controller.UserControllerImpl;
+import java.util.ArrayList;
+import java.util.List;
+import model.GameModel;
+import model.GameModelImpl;
+import model.GameTrackModel;
+import model.GameTrackModelImpl;
+import model.PlatformModel;
+import model.PlatformModelImpl;
+import model.UserModel;
+import model.UserModelImpl;
+import view.MainView;
+import view.game.GameView;
+import view.game.GameViewImpl;
+import view.gametrack.GameTrackView;
+import view.gametrack.GameTrackViewImpl;
+import view.user.UserView;
+import view.user.UserViewImpl;
+
 /**
  *
  * @author juanito
@@ -14,7 +40,46 @@ public class GameLog {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        // USERS
+        UserModel userModel = new UserModelImpl();
+        
+        UserView userView1 = new UserViewImpl();
+        List<UserView> userViews = new ArrayList<UserView>();
+        userViews.add(userView1);
+        
+        UserController userController = new UserControllerImpl();
+        userController.setup(userModel, userViews);
+        
+        // GAMES
+        GameModel gameModel = new GameModelImpl();
+        
+        GameView gameView1 = new GameViewImpl();
+        List<GameView> gameViews = new ArrayList<>();
+        gameViews.add(gameView1);
+        
+        GameController gameController = new GameControllerImpl();
+        gameController.setup(gameModel, gameViews);
+        
+        // GAME TRACKS
+        GameTrackModel gameTrackModel = new GameTrackModelImpl();
+        
+        GameTrackView gameTrackView1 = new GameTrackViewImpl();
+        List<GameTrackView> gameTrackViews = new ArrayList<>();
+        gameTrackViews.add(gameTrackView1);
+        
+        GameTrackController gameTrackController = new GameTrackControllerImpl();
+        gameTrackController.setup(gameTrackModel, gameTrackViews);
+        
+        // PLATFORMS
+        PlatformModel platformModel = new PlatformModelImpl();
+        
+        PlatformController platformController = new PlatformControllerImpl();
+        platformController.setup(platformModel);
+        
+        // MAIN VIEW
+        MainView mainView1 = new MainView(userView1, gameView1, gameTrackView1);
+        
     }
     
 }
