@@ -38,6 +38,7 @@ public class UserControllerImpl implements UserController {
     public void setup(UserModel model, List<UserView> views) {
         this.setModel(model);
         model.setController(this);
+        this.addViews(views);
         
     }
 
