@@ -13,13 +13,7 @@ import model.entity.Platform;
  */
 public interface PlatformDAO {
     
-    public void create(Platform platform);
-    
     public Platform read(int id);
-    
-    public void update(Platform platform);
-    
-    public void delete(Platform platform);
     
     public List<Platform> list();
     

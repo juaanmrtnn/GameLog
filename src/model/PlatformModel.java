@@ -18,13 +18,7 @@ public interface PlatformModel {
     
     public void setController(PlatformController controller);
     
-    public void setPlatform(Platform platform);
-    
     public Platform getPlatform(int id);
-    
-    public void updatePlatform(Platform platform);
-    
-    public void deletePlatform(Platform platform);
     
     public List<Platform> listPlatforms();
     

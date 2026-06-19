@@ -29,30 +29,9 @@ public class PlatformModelImpl implements PlatformModel {
     }
 
     @Override
-    public void setPlatform(Platform platform) {
-        PlatformDAO dao = new PlatformDAOJDBC();
-        dao.create(platform);
-        this.controller.fireDataModelChanged();
-    }
-
-    @Override
     public Platform getPlatform(int id) {
         PlatformDAO dao = new PlatformDAOJDBC();
         return dao.read(id);
-    }
-
-    @Override
-    public void updatePlatform(Platform platform) {
-        PlatformDAO dao = new PlatformDAOJDBC();
-        dao.update(platform);
-        this.controller.fireDataModelChanged();
-    }
-
-    @Override
-    public void deletePlatform(Platform platform) {
-        PlatformDAO dao = new PlatformDAOJDBC();
-        dao.delete(platform);
-        this.controller.fireDataModelChanged();
     }
 
     @Override

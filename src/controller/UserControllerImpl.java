@@ -43,7 +43,9 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public void start() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        for(UserView view : views){
+            view.display();
+        }
     }
 
     @Override
