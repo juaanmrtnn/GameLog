@@ -46,8 +46,9 @@ public class UserDAOJDBC implements UserDAO {
         User u = null;
         
         try {
-            Statement stmt = Persistence.createConnection().createStatement();
-            ResultSet res = stmt.executeQuery(sql);
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet res = pstmt.executeQuery();
             
             u = new UserImpl(res.getInt("user_id"), res.getString("username"), res.getString("email"));
             

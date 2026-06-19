@@ -47,8 +47,9 @@ public class GameDAOJDBC implements GameDAO {
         Game g = null;
         
         try {
-            Statement stmt = Persistence.createConnection().createStatement();
-            ResultSet res = stmt.executeQuery(sql);
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet res = pstmt.executeQuery();
             
             g = new GameImpl(res.getInt("id"), res.getString("title"), res.getString("studio"), res.getInt("launch_year"));
             

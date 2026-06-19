@@ -45,8 +45,9 @@ public class GameTrackDAOJDBC implements GameTrackDAO {
         GameTrack t = null;
         
         try {
-            Statement stmt = Persistence.createConnection().createStatement();
-            ResultSet res = stmt.executeQuery(sql);
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet res = pstmt.executeQuery();
             
             t = new GameTrackImpl(res.getInt("id"), res.getInt("user_id"), res.getInt("game_id"), res.getInt("platform_id"), res.getString("progress"), res.getDouble("played_hours"));
             

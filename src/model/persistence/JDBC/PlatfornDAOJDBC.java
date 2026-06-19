@@ -41,8 +41,9 @@ public class PlatfornDAOJDBC implements PlatformDAO {
         Platform p = null;
         
         try {
-            Statement stmt = Persistence.createConnection().createStatement();
-            ResultSet res = stmt.executeQuery(sql);
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet res = pstmt.executeQuery();
             
             p = new PlatformImpl(res.getInt("id"), res.getString("platform"));
             
