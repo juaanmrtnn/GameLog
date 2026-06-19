@@ -13,7 +13,10 @@ import controller.UserController;
 public class UserViewImpl extends javax.swing.JPanel implements UserView {
 
     private UserController controller;
+    
+    // swing attributes
     private UserTableModel userTableModel;
+    private UserViewImplInternal userPanelInternal;
     
     /**
      * Creates new form UserViewImpl
@@ -21,6 +24,8 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
     public UserViewImpl() {
         userTableModel = new UserTableModel();
         initComponents();
+        this.userPanelInternal = new UserViewImplInternal(this);
+        this.userPanel.add(this.userPanelInternal);
     }
 
     /**
@@ -34,17 +39,22 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         usersTable = new javax.swing.JTable();
+        userPanel = new javax.swing.JPanel();
 
         usersTable.setModel(userTableModel);
         jScrollPane1.setViewportView(usersTable);
+
+        userPanel.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -52,7 +62,9 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(162, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -69,6 +81,7 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel userPanel;
     private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
 

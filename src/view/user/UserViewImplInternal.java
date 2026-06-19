@@ -10,10 +10,13 @@ package view.user;
  */
 public class UserViewImplInternal extends javax.swing.JPanel {
 
+    private UserViewImpl view;
+    
     /**
      * Creates new form UserViewImplInternal
      */
-    public UserViewImplInternal() {
+    public UserViewImplInternal(UserViewImpl view) {
+        this.view = view;
         initComponents();
     }
 
@@ -64,9 +67,9 @@ public class UserViewImplInternal extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(addButton)
-                        .addGap(82, 82, 82)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                         .addComponent(modifyButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addGap(55, 55, 55)
                         .addComponent(deleteButton)
                         .addGap(85, 85, 85))))
         );
@@ -81,7 +84,7 @@ public class UserViewImplInternal extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(modifyButton)

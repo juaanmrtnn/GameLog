@@ -29,6 +29,8 @@ public class MainView extends javax.swing.JFrame {
         this.jTabbedPane1.add("My Log", (JPanel)gameTrackView);
         
         this.setTitle("GameLog - Personal Gaming Tracker");
+        
+        this.setSize(600, 550);
         this.setLocationRelativeTo(null); // center window on screen
     }
 
