@@ -4,19 +4,22 @@
  */
 package model.persistence;
 
+import java.util.List;
+import model.entity.GameTrack;
+
 /**
  *
  * @author juanito
  */
 public interface GameTrackDAO {
     
-    public void create(User user);
+    public void create(GameTrack track);
     
-    public User read(int id);
+    public GameTrack read(int id);
     
-    public void update(User user);
+    public void update(GameTrack track);
     
-    public void delete(User user);
+    public void delete(GameTrack track);
     
-    public List<User> list();
+    public List<GameTrack> list();
 }
