@@ -24,13 +24,12 @@ public class UserDAOJDBC implements UserDAO {
     
     @Override
     public void create(User user){
-        String sql = "insert into users(user_id, username, email) values(?, ?, ?)";
+        String sql = "insert into users(username, email) values(?, ?)";
         
         try {
             PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
-            pstmt.setInt(1, user.getId());
-            pstmt.setString(2, user.getUsername());
-            pstmt.setString(3, user.getEmail());
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getEmail());
             pstmt.executeUpdate();
             
         } catch(SQLException e){

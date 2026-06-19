@@ -20,16 +20,15 @@ public class GameTrackDAOJDBC implements GameTrackDAO {
     
     @Override
     public void create(GameTrack track){
-        String sql = "insert into game_track(id, user_id, game_id, platform_id, progress, played_hours) values(?, ?, ?, ?, ?, ?)";
+        String sql = "insert into game_track(user_id, game_id, platform_id, progress, played_hours) values(?, ?, ?, ?, ?)";
         
         try {
             PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
-            pstmt.setInt(1, track.getId());
-            pstmt.setInt(2, track.getUserId());
-            pstmt.setInt(3, track.getGameId());
-            pstmt.setInt(4, track.getPlatformId());
-            pstmt.setString(5, track.getProgress());
-            pstmt.setDouble(6, track.getPlayedHours());
+            pstmt.setInt(1, track.getUserId());
+            pstmt.setInt(2, track.getGameId());
+            pstmt.setInt(3, track.getPlatformId());
+            pstmt.setString(4, track.getProgress());
+            pstmt.setDouble(5, track.getPlayedHours());
             pstmt.executeUpdate();
             
         } catch(SQLException e){

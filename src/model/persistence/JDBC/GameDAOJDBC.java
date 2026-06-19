@@ -24,14 +24,13 @@ public class GameDAOJDBC implements GameDAO {
     
     @Override
     public void create(Game game){
-        String sql = "insert into games(id, title, studio, launch_year) values(?, ?, ?, ?)";
+        String sql = "insert into games(title, studio, launch_year) values(?, ?, ?)";
         
         try {
             PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
-            pstmt.setInt(1, game.getId());
-            pstmt.setString(2, game.getTitle());
-            pstmt.setString(3, game.getStudio());
-            pstmt.setInt(4, game.getLaunchYear());
+            pstmt.setString(1, game.getTitle());
+            pstmt.setString(2, game.getStudio());
+            pstmt.setInt(3, game.getLaunchYear());
             pstmt.executeUpdate();
             
         } catch(SQLException e){
