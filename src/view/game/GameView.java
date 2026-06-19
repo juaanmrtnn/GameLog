@@ -4,10 +4,18 @@
  */
 package view.game;
 
+import controller.GameController;
+
 /**
  *
  * @author juanito
  */
 public interface GameView {
+    
+    public GameController getController();
+    
+    public void setController(GameController controller);
+    
+    
     
 }

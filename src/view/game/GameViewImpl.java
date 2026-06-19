@@ -10,7 +10,7 @@ import controller.GameController;
  *
  * @author juanito
  */
-public class GameViewImpl extends javax.swing.JPanel {
+public class GameViewImpl extends javax.swing.JPanel implements GameView {
 
     
     private GameController controller;
@@ -41,6 +41,16 @@ public class GameViewImpl extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    @Override
+    public GameController getController() {
+        return controller;
+    }
+
+    @Override
+    public void setController(GameController controller) {
+        this.controller = controller;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

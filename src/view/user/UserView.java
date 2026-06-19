@@ -4,10 +4,15 @@
  */
 package view.user;
 
+import controller.UserController;
+
 /**
  *
  * @author juanito
  */
 public interface UserView {
     
+    public UserController getController();
+    
+    public void setController(UserController controller);
 }
