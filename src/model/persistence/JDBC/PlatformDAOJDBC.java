@@ -15,7 +15,7 @@ import model.persistence.PlatformDAO;
  *
  * @author juanito
  */
-public class PlatfornDAOJDBC implements PlatformDAO {
+public class PlatformDAOJDBC implements PlatformDAO {
     // CRUD operations to interact with the database
     
     @Override
