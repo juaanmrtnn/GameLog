@@ -13,7 +13,8 @@ public class PlatformImpl implements Platform{
     private int id;
     private String platform;
 
-    public PlatformImpl(String platform) {
+    public PlatformImpl(int id, String platform) {
+        this.id = id;
         this.platform = platform;
     }
 

@@ -10,4 +10,13 @@ package model.persistence;
  */
 public interface GameTrackDAO {
     
+    public void create(User user);
+    
+    public User read(int id);
+    
+    public void update(User user);
+    
+    public void delete(User user);
+    
+    public List<User> list();
 }

@@ -4,10 +4,23 @@
  */
 package model.persistence;
 
+import java.util.List;
+import model.entity.Platform;
+
 /**
  *
  * @author juanito
  */
 public interface PlatformDAO {
+    
+    public void create(Platform platform);
+    
+    public Platform read(int id);
+    
+    public void update(Platform platform);
+    
+    public void delete(Platform platform);
+    
+    public List<Platform> list();
     
 }
