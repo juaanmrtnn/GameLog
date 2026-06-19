@@ -14,6 +14,14 @@ import model.entity.Game;
  */
 public interface GameDAO {
     
+    public void create(Game game);
+    
+    public Game read(int id);
+    
+    public void update(Game game);
+    
+    public void delete(Game game);
+    
     public List<Game> list();
     
 }
