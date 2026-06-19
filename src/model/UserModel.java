@@ -4,10 +4,27 @@
  */
 package model;
 
+import controller.UserController;
+import java.util.List;
+import model.entity.User;
+
 /**
  *
  * @author juanito
  */
 public interface UserModel {
     
+    public UserController getController();
+    
+    public void setController(UserController controller);
+    
+    public void setUser(User user);
+    
+    public User getUser(int id);
+    
+    public void updateUser(User user);
+    
+    public void deleteUser(User user);
+    
+    public List<User> listUsers();
 }
