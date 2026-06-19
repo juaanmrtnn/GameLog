@@ -4,10 +4,98 @@
  */
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import model.GameModel;
+import model.entity.Game;
+import model.entity.GameImpl;
+import view.game.GameView;
+
 /**
  *
  * @author juanito
  */
-public class GameControllerImpl {
+public class GameControllerImpl implements GameController {
+    
+    private GameModel model;
+    private List<GameView> views;
+
+    public GameControllerImpl() {
+        this.views = new ArrayList<>();
+    }
+    
+    
+    @Override
+    public GameModel getModel() {
+        return model;
+    }
+
+    @Override
+    public void setModel(GameModel model) {
+        this.model = model;
+    }
+
+    @Override
+    public void setup(GameModel model, List<GameView> views) {
+        this.setModel(model);
+        model.setController(this);
+        for(GameView view : views){
+            
+        }
+    }
+
+    @Override
+    public void start() {
+        for(GameView view : views){
+            this.views.display();
+        }
+    }
+
+    public void addView(GameView view){
+        view.setController(this);
+        this.views.add(view);
+    }
+    
+    public void addViews(List<GameView> views) {
+        for(GameView view : views){
+            views.add(view);
+        }
+    }
+
+    @Override
+    public void setGameGesture(String id, String title, String studio, String launchYear) {
+        Game game = new GameImpl(new Integer((String)id), title, studio, new Integer((String)launchYear));
+        this.model.setGame(game);
+    }
+
+    @Override
+    public Game getGameGesture(String id) {
+        Game game = this.model.getGame(new Integer((String)id));
+        return game;
+    }
+
+    @Override
+    public void updateGameGesture(String id, String title, String studio, String launchYear) {
+        Game game = new GameImpl(new Integer((String)id), title, studio, new Integer((String)launchYear));
+        this.model.updateGame(game);
+    }
+
+    @Override
+    public void deleteGameGesture(String id, String title, String studio, String launchYear) {
+        Game game = new GameImpl(new Integer((String)id), title, studio, new Integer((String)launchYear));
+        this.model.deleteGame(game);
+    }
+
+    @Override
+    public List<Game> listGamesGesture() {
+        return this.model.listGames();
+    }
+    
+    @Override
+    public void fireDataModelChanged() {
+        for (GameView g: this.views) {
+            g.display();
+        }
+    }
     
 }
