@@ -80,6 +80,8 @@ public class GameLog {
         // MAIN VIEW
         MainView mainView1 = new MainView(userView1, gameView1, gameTrackView1);
         
+        mainView1.display();
+        
     }
     
 }

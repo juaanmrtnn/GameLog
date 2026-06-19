@@ -12,6 +12,8 @@ import controller.GameTrackController;
  */
 public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackView {
 
+    private GameTrackController controller;
+    
     /**
      * Creates new form GameTrackViewImpl
      */
@@ -42,17 +44,17 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
 
     @Override
     public GameTrackController getController() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return controller;
     }
 
     @Override
     public void setController(GameTrackController controller) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.controller = controller;
     }
 
     @Override
     public void display() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
 

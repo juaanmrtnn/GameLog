@@ -82,6 +82,6 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
 
     @Override
     public void display() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 }

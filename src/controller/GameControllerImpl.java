@@ -52,12 +52,12 @@ public class GameControllerImpl implements GameController {
     @Override
     public void addView(GameView view){
         view.setController(this);
-        this.views.add(view);
+        this.addView(view);
     }
     
     public void addViews(List<GameView> views) {
         for(GameView view : views){
-            views.add(view);
+            this.views.add(view);
         }
     }
     

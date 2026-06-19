@@ -57,7 +57,7 @@ public class GameTrackControllerImpl implements GameTrackController {
     
     public void addViews(List<GameTrackView> views){
         for(GameTrackView v : views){
-            views.add(v);
+            this.addView(v);
         }
     }
 
