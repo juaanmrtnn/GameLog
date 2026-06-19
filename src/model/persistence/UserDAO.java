@@ -4,10 +4,22 @@
  */
 package model.persistence;
 
+import java.util.List;
+import model.entity.User;
+
 /**
  *
  * @author juanito
  */
 public interface UserDAO {
     
+    public void create(User user);
+    
+    public User read(int id);
+    
+    public void update(User user);
+    
+    public void delete(User user);
+    
+    public List<User> list();
 }

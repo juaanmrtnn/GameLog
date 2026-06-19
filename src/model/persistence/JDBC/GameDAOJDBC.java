@@ -20,6 +20,8 @@ import model.persistence.GameDAO;
  */
 public class GameDAOJDBC implements GameDAO {
     
+    // CRUD operations to interact with the database
+    
     @Override
     public void create(Game game){
         String sql = "insert into games(id, title, studio, launch_year) values(?, ?, ?, ?)";
