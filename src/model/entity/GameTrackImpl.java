@@ -24,6 +24,10 @@ public class GameTrackImpl implements GameTrack {
         this.progress = progress;
         this.playedHours = playedHours;
     }
+    
+    public GameTrackImpl(int id){
+        this(id,0,0,0,null,0.0);
+    }
 
     public int getId() {
         return id;
