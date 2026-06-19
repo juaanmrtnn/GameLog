@@ -62,6 +62,27 @@ public class UserDAOJDBC implements UserDAO {
     }
     
     @Override
+    public User readByUsername(String username) {
+        String sql = "select * from users where username = ?";
+        User u = null;
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet res = pstmt.executeQuery();
+            
+            u = new UserImpl(res.getInt("user_id"), res.getString("username"), res.getString("email"));
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+        
+        return u;
+    }
+    
+    @Override
     public void update(User user){
         String sql = "update users set username = ?, email = ? where user_id = ?";
         

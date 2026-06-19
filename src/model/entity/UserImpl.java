@@ -25,6 +25,10 @@ public class UserImpl implements User {
         this(id, null, null);
     }
 
+    public UserImpl(String username){
+        this(0, username, null);
+    }
+    
     @Override
     public int getId() {
         return id;

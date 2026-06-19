@@ -22,6 +22,8 @@ public interface UserModel {
     
     public User getUser(int id);
     
+    public User getUserByUsername(String username);
+    
     public void updateUser(User user);
     
     public void deleteUser(User user);

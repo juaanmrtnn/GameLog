@@ -43,6 +43,11 @@ public class UserViewImplInternal extends javax.swing.JPanel {
         jLabel2.setText("Email:");
 
         addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         modifyButton.setText("Modify");
 
@@ -109,6 +114,19 @@ public class UserViewImplInternal extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        try {
+            String username = this.usernameTextField.getText();
+            String email = this.emailTextField.getText();
+            
+            String id = view.getController().get
+        view.fireSetUserGesture(this.j.getText(), (Cliente)this.jComboCliente.getSelectedItem(), this.jTextFieldImporte.getText());
+    } catch (RuntimeException e) {
+        javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+    }
+        
+    }//GEN-LAST:event_addButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

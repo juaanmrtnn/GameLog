@@ -40,6 +40,12 @@ public class UserModelImpl implements UserModel {
         UserDAO dao = new UserDAOJDBC();
         return dao.read(id);
     }
+    
+    @Override
+    public User getUserByUsername(String username) {
+        UserDAO dao = new UserDAOJDBC();
+        return dao.readByUsername(username);
+    }
 
     @Override
     public void updateUser(User user) {

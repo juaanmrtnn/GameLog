@@ -32,6 +32,8 @@ public interface UserController {
     
     public User getUserGesture(String id);
     
+    public User getUserByUsernameGesture(String username);
+    
     public void updateUserGesture(String id, String username, String email);
     
     public void deleteUserGesture(String id, String username, String email);

@@ -77,6 +77,11 @@ public class UserControllerImpl implements UserController {
     public User getUserGesture(String id) {
         return this.model.getUser(Integer.parseInt(id));
     }
+    
+    @Override
+    public User getUserByUsernameGesture(String username) {
+        return this.model.getUserByUsername(username);
+    }
 
     @Override
     public void updateUserGesture(String id, String username, String email) {
