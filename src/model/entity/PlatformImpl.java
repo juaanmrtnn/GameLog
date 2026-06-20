@@ -17,6 +17,10 @@ public class PlatformImpl implements Platform{
         this.id = id;
         this.platform = platform;
     }
+    
+    public PlatformImpl(int id){
+        this(id, null);
+    }
 
     @Override
     public int getId() {

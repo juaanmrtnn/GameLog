@@ -8,7 +8,10 @@ import model.entity.GameTrack;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.entity.GameImpl;
 import model.entity.GameTrackImpl;
+import model.entity.PlatformImpl;
+import model.entity.UserImpl;
 import model.persistence.GameTrackDAO;
 /**
  *
@@ -24,9 +27,9 @@ public class GameTrackDAOJDBC implements GameTrackDAO {
         
         try {
             PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
-            pstmt.setInt(1, track.getUserId());
-            pstmt.setInt(2, track.getGameId());
-            pstmt.setInt(3, track.getPlatformId());
+            pstmt.setInt(1, track.getUser().getId());
+            pstmt.setInt(2, track.getGame().getId());
+            pstmt.setInt(3, track.getPlatform().getId());
             pstmt.setString(4, track.getProgress());
             pstmt.setDouble(5, track.getPlayedHours());
             pstmt.executeUpdate();
@@ -48,7 +51,7 @@ public class GameTrackDAOJDBC implements GameTrackDAO {
             pstmt.setInt(1, id);
             ResultSet res = pstmt.executeQuery();
             
-            t = new GameTrackImpl(res.getInt("id"), res.getInt("user_id"), res.getInt("game_id"), res.getInt("platform_id"), res.getString("progress"), res.getDouble("played_hours"));
+            t = new GameTrackImpl(res.getInt("id"), new UserImpl(res.getInt("user_id")), new GameImpl(res.getInt("game_id")), new PlatformImpl(res.getInt("platform_id")), res.getString("progress"), res.getDouble("played_hours"));
             
         } catch(SQLException e){
             System.out.println(e);
@@ -103,7 +106,7 @@ public class GameTrackDAOJDBC implements GameTrackDAO {
             ResultSet res = stmt.executeQuery(sql);
             
             while(res.next()){
-                tracks.add(new GameTrackImpl(res.getInt("id"), res.getInt("user_id"), res.getInt("game_id"), res.getInt("platform_id"), res.getString("progress"), res.getDouble("played_hours")));
+                tracks.add(new GameTrackImpl(res.getInt("id"), new UserImpl(res.getInt("user_id")), new GameImpl(res.getInt("game_id")), new PlatformImpl(res.getInt("platform_id")), res.getString("progress"), res.getDouble("played_hours")));
             }
             res.close();
             
