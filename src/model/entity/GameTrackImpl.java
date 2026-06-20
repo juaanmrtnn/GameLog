@@ -10,23 +10,23 @@ package model.entity;
  */
 public class GameTrackImpl implements GameTrack {
     private int id;
-    private int userId;
-    private int gameId;
-    private int platformId;
+    private User user;
+    private Game game;
+    private Platform platform;
     private String progress;
     private Double playedHours;
 
-    public GameTrackImpl(int id, int userId, int gameId, int platformId, String progress, Double playedHours) {
+    public GameTrackImpl(int id, User user, Game game, Platform platform, String progress, Double playedHours) {
         this.id = id;
-        this.userId = userId;
-        this.gameId = gameId;
-        this.platformId = platformId;
+        this.user = user;
+        this.game = game;
+        this.platform = platform;
         this.progress = progress;
         this.playedHours = playedHours;
     }
     
     public GameTrackImpl(int id){
-        this(id,0,0,0,null,0.0);
+        this(id,null,null,null,null,0.0);
     }
 
     public int getId() {
@@ -38,33 +38,33 @@ public class GameTrackImpl implements GameTrack {
     }
     
     @Override
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
     @Override
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
-    public int getGameId() {
-        return gameId;
+    public Game getGame() {
+        return game;
     }
 
     @Override
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     @Override
-    public int getPlatformId() {
-        return platformId;
+    public Platform getPlatform() {
+        return platform;
     }
 
     @Override
-    public void setPlatformId(int platformId) {
-        this.platformId = platformId;
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
     }
 
     @Override

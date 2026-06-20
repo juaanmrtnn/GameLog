@@ -16,17 +16,17 @@ public interface GameTrack extends Serializable {
 
     public void setId(int id);
     
-    public int getUserId();
+    public User getUser();
 
-    public void setUserId(int userId);
+    public void setUser(User user);
 
-    public int getGameId();
+    public Game getGame();
     
-    public void setGameId(int gameId);
+    public void setGame(Game game);
 
-    public int getPlatformId();
+    public Platform getPlatform();
     
-    public void setPlatformId(int platformId);
+    public void setPlatform(Platform platform);
             
     public String getProgress();
 
