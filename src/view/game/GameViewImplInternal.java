@@ -147,11 +147,41 @@ public class GameViewImplInternal extends javax.swing.JPanel {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            String id = view.getSelectedGameId();
+            
+            if(id == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, select a game from the table clicking on it.", "Warning", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            String title = this.titleTextField.getText();
+            String studio = this.studioTextField.getText();
+            String launchYear = this.launchYearTextField.getText();
+            
+            view.fireUpdateGameGesture(id, title, studio, launchYear);
+            
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_modifyButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            String id = view.getSelectedGameId();
+            
+            if(id == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, select a game from the table clicking on it.", "Warning", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            String title = this.titleTextField.getText();
+            String studio = this.studioTextField.getText();
+            String launchYear = this.launchYearTextField.getText();
+            
+            view.fireDeleteGameGesture(id, title, studio, launchYear);
+            
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
 

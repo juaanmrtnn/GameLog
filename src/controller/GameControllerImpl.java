@@ -85,7 +85,7 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public void deleteGameGesture(String id, String title, String studio, String launchYear) {
-        Game game = new GameImpl(Integer.parseInt(id), title, studio, Integer.parseInt(launchYear));
+        Game game = new GameImpl(Integer.parseInt(id)); 
         this.model.deleteGame(game);
     }
 
