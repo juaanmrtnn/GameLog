@@ -121,4 +121,8 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
     public void fireUpdateUserGesture(String id, String username, String email){
         this.getController().updateUserGesture(id, username, email);
     }
+    
+    public void fireDeleteUserGesture(String id, String username, String email){
+        this.getController().deleteUserGesture(id, username, email);
+    }
 }

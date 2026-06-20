@@ -161,7 +161,22 @@ public class UserViewImplInternal extends javax.swing.JPanel {
     }//GEN-LAST:event_modifyButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            String id = view.getSelectedUserId();
+            
+            if(id == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, select an user from the table clicking on it.", "Warning", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            String username = this.usernameTextField.getText();
+            String email = this.emailTextField.getText();
+            
+            view.fireDeleteUserGesture(id, username, email);
+            
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
 
