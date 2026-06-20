@@ -25,8 +25,16 @@ public class UserImpl implements User {
         this(id, null, null);
     }
 
+    // constructor overloading to handle search by username operation
     public UserImpl(String username){
         this(0, username, null);
+    }
+    
+    // constructor overloading to handle auto-increment ids
+    public UserImpl(String username, String email){
+        this.id = 0;
+        this.username = username;
+        this.email = email;
     }
     
     @Override
