@@ -28,7 +28,7 @@ public interface GameController {
     
     public void removeView(GameView view);
     
-    public void setGameGesture(String id, String title, String studio, String launchYear);
+    public void setGameGesture(String title, String studio, String launchYear);
     
     public Game getGameGesture(String id);
     

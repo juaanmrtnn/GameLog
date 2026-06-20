@@ -51,13 +51,13 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public void addView(GameView view){
-        view.setController(this);
-        this.addView(view);
+        view.setController(this); // 1. Le decimos a la vista quién es su controlador
+        this.views.add(view);     // 2. Metemos la vista en nuestra lista interna
     }
     
     public void addViews(List<GameView> views) {
         for(GameView view : views){
-            this.views.add(view);
+            this.addView(view);   // 3. Reutilizamos el método de arriba para cada vista
         }
     }
     
@@ -66,8 +66,8 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void setGameGesture(String id, String title, String studio, String launchYear) {
-        Game game = new GameImpl(Integer.parseInt(id), title, studio, Integer.parseInt(launchYear));
+    public void setGameGesture(String title, String studio, String launchYear) {
+        Game game = new GameImpl(title, studio, Integer.parseInt(launchYear));
         this.model.setGame(game);
     }
 

@@ -5,6 +5,7 @@
 package view.game;
 
 import controller.GameController;
+import model.entity.Game;
 
 /**
  *
@@ -14,11 +15,19 @@ public class GameViewImpl extends javax.swing.JPanel implements GameView {
 
     
     private GameController controller;
+    
+    private GameTableModel gameTableModel;
+    private GameViewImplInternal gamePanelInternal;
+    
     /**
      * Creates new form GameViewImpl
      */
     public GameViewImpl() {
+        this.gameTableModel = new GameTableModel();
         initComponents();
+        this.gamePanelInternal = new GameViewImplInternal(this);
+        this.gamePanel.add(this.gamePanelInternal);
+        
     }
 
     /**
@@ -31,20 +40,13 @@ public class GameViewImpl extends javax.swing.JPanel implements GameView {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        gameTable = new javax.swing.JTable();
+        gamePanel = new javax.swing.JPanel();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        gameTable.setModel(gameTableModel);
+        jScrollPane1.setViewportView(gameTable);
+
+        gamePanel.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -52,7 +54,9 @@ public class GameViewImpl extends javax.swing.JPanel implements GameView {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -60,7 +64,9 @@ public class GameViewImpl extends javax.swing.JPanel implements GameView {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -75,13 +81,50 @@ public class GameViewImpl extends javax.swing.JPanel implements GameView {
     }
 
     @Override
+    public void dataModelChanged() {
+        gameTableModel.setGames(this.getController().listGamesGesture());
+    }
+    
+    @Override
     public void display() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                setVisible(true);
+                dataModelChanged();
+            }
+        });
+    }
+    
+    public void fireSetGameGesture(String title, String studio, String launchYear){
+        this.getController().setGameGesture(title, studio, launchYear);
+    }
+    
+    public String getSelectedGameId(){
+        int selectedRow = this.gameTable.getSelectedRow();
+        
+        // no row selected
+        if(selectedRow == -1){
+            return null;
+        }
+        
+        Game selectedGame = this.gameTableModel.getGames().get(selectedRow);
+        
+        return String.valueOf(selectedGame.getId());
+    }
+    
+    public void fireUpdateGameGesture(String id, String title, String studio, String launchYear){
+        this.getController().updateGameGesture(id, title, studio, launchYear);
+    }
+    
+    public void fireDeleteGameGesture(String id, String title, String studio, String launchYear){
+        this.getController().deleteGameGesture(id, title, studio, launchYear);
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel gamePanel;
+    private javax.swing.JTable gameTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
 }

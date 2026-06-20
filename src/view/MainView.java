@@ -103,6 +103,8 @@ public class MainView extends javax.swing.JFrame {
             public void run() {
                 setVisible(true);
                 userView.display();
+                gameView.display();
+                gameTrackView.display();
             }
         });
     }

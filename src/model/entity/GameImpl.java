@@ -25,6 +25,13 @@ public class GameImpl implements Game {
     public GameImpl(int id){
         this(id, null, null, 0);
     }
+    
+    public GameImpl(String title, String studio, int launchYear){
+        this.id = 0;
+        this.title = title;
+        this.studio = studio;
+        this.launchYear = launchYear;
+    }
 
     @Override
     public int getId() {

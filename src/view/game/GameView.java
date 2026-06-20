@@ -16,6 +16,8 @@ public interface GameView {
     
     public void setController(GameController controller);
     
+    public void dataModelChanged();
+    
     public void display();
     
 }
