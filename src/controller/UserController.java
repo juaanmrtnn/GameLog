@@ -28,7 +28,7 @@ public interface UserController {
     
     public void removeView(UserView view);
     
-    public void setUserGesture(String id, String username, String email);
+    public void setUserGesture(String username, String email);
     
     public User getUserGesture(String id);
     

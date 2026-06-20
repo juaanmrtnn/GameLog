@@ -99,4 +99,8 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
             }
         });
     }
+    
+    public void fireSetUserGesture(String username, String email){
+        this.getController().setUserGesture(username, email);
+    }
 }

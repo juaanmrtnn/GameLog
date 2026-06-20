@@ -4,6 +4,9 @@
  */
 package view.user;
 
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author juanito
@@ -120,11 +123,11 @@ public class UserViewImplInternal extends javax.swing.JPanel {
             String username = this.usernameTextField.getText();
             String email = this.emailTextField.getText();
             
-            String id = view.getController().get
-        view.fireSetUserGesture(this.j.getText(), (Cliente)this.jComboCliente.getSelectedItem(), this.jTextFieldImporte.getText());
-    } catch (RuntimeException e) {
-        javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
-    }
+            view.fireSetUserGesture(username, email);
+            
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
         
     }//GEN-LAST:event_addButtonActionPerformed
 

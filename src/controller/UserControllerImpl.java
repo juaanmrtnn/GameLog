@@ -67,8 +67,8 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public void setUserGesture(String id, String username, String email) {
-        User u = new UserImpl(Integer.parseInt(id), username, email);
+    public void setUserGesture(String username, String email) {
+        User u = new UserImpl(username, email);
         this.model.setUser(u);
         this.fireDataModelChanged();
     }
