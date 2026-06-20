@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import model.GameTrackModel;
+import model.entity.GameImpl;
 import model.entity.GameTrack;
 import model.entity.GameTrackImpl;
+import model.entity.PlatformImpl;
+import model.entity.UserImpl;
 import view.gametrack.GameTrackView;
 
 /**
@@ -68,7 +71,7 @@ public class GameTrackControllerImpl implements GameTrackController {
 
     @Override
     public void setTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours) {
-        GameTrack t = new GameTrackImpl(Integer.parseInt(id), Integer.parseInt(userId), Integer.parseInt(gameId), Integer.parseInt(platformId), progress, Double.parseDouble(playedHours));
+        GameTrack t = new GameTrackImpl(Integer.parseInt(id), new UserImpl(Integer.parseInt(userId)), new GameImpl(Integer.parseInt(gameId)), new PlatformImpl(Integer.parseInt(platformId)), progress, Double.parseDouble(playedHours));
         this.model.setTrack(t);
         
     }
@@ -80,13 +83,13 @@ public class GameTrackControllerImpl implements GameTrackController {
 
     @Override
     public void updateTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours) {
-        GameTrack t = new GameTrackImpl(Integer.parseInt(id), Integer.parseInt(userId), Integer.parseInt(gameId), Integer.parseInt(platformId), progress, Double.parseDouble(playedHours));
+        GameTrack t = new GameTrackImpl(Integer.parseInt(id), new UserImpl(Integer.parseInt(userId)), new GameImpl(Integer.parseInt(gameId)), new PlatformImpl(Integer.parseInt(platformId)), progress, Double.parseDouble(playedHours));
         this.model.updateTrack(t);
     }
 
     @Override
     public void deleteTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours) {
-        GameTrack t = new GameTrackImpl(Integer.parseInt(id), Integer.parseInt(userId), Integer.parseInt(gameId), Integer.parseInt(platformId), progress, Double.parseDouble(playedHours));
+        GameTrack t = new GameTrackImpl(Integer.parseInt(id), new UserImpl(Integer.parseInt(userId)), new GameImpl(Integer.parseInt(gameId)), new PlatformImpl(Integer.parseInt(platformId)), progress, Double.parseDouble(playedHours));
         this.model.deleteTrack(t);
     }
 
