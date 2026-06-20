@@ -5,6 +5,7 @@
 package view.user;
 
 import controller.UserController;
+import model.entity.User;
 
 /**
  *
@@ -102,5 +103,22 @@ public class UserViewImpl extends javax.swing.JPanel implements UserView {
     
     public void fireSetUserGesture(String username, String email){
         this.getController().setUserGesture(username, email);
+    }
+    
+    public String getSelectedUserId(){
+        int selectedRow = this.usersTable.getSelectedRow();
+        
+        // no row selected
+        if(selectedRow == -1){
+            return null;
+        }
+        
+        User selectedUser = this.userTableModel.getUsers().get(selectedRow);
+        
+        return String.valueOf(selectedUser.getId());
+    }
+    
+    public void fireUpdateUserGesture(String id, String username, String email){
+        this.getController().updateUserGesture(id, username, email);
     }
 }
