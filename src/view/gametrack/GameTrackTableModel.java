@@ -6,14 +6,16 @@ package view.gametrack;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 import model.entity.GameTrack;
 
 /**
  *
  * @author juanito
  */
-public class GameTrackTableModel {
+public class GameTrackTableModel implements TableModel {
     
     private List<GameTrack> tracks = new ArrayList<GameTrack>();
     private List<TableModelListener> tableListeners = new ArrayList<TableModelListener>();
@@ -60,7 +62,7 @@ public class GameTrackTableModel {
                 name = "Played Hours";
                 break;
             case 4:
-                name = "Platform";
+                name = "Progress";
                 break;
         }
         return name;
@@ -97,13 +99,19 @@ public class GameTrackTableModel {
         Object value = null;
         switch (columnIndex) {
             case 0:
-                value = track.getUserId();
+                value = track.getUser().getUsername();
                 break;
             case 1:
-                value = factura.getCliente().getDNI();
+                value = track.getGame().getTitle();
                 break;
             case 2:
-                value = factura.getImporte();
+                value = track.getPlatform().getPlatform();
+                break;
+            case 3:
+                value = track.getPlayedHours();
+                break;
+            case 4:
+                value = track.getProgress();
                 break;
         }
         return value;

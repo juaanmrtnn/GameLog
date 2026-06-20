@@ -16,6 +16,8 @@ public interface GameTrackView {
     
     public void setController(GameTrackController controller);
     
+    public void dataModelChanged();
+    
     public void display();
     
 }

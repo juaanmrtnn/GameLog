@@ -14,11 +14,15 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
 
     private GameTrackController controller;
     
+    private GameTrackTableModel gameTrackTableModel;
+    
     /**
      * Creates new form GameTrackViewImpl
      */
     public GameTrackViewImpl() {
+        this.gameTrackTableModel = new GameTrackTableModel();
         initComponents();
+        
     }
 
     /**
@@ -30,15 +34,43 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        trackTable = new javax.swing.JTable();
+        gameTrackPanel = new javax.swing.JPanel();
+
+        trackTable.setModel(gameTrackTableModel);
+        jScrollPane1.setViewportView(trackTable);
+
+        javax.swing.GroupLayout gameTrackPanelLayout = new javax.swing.GroupLayout(gameTrackPanel);
+        gameTrackPanel.setLayout(gameTrackPanelLayout);
+        gameTrackPanelLayout.setHorizontalGroup(
+            gameTrackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        gameTrackPanelLayout.setVerticalGroup(
+            gameTrackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 169, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(gameTrackPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(gameTrackPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -53,11 +85,24 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
     }
 
     @Override
+    public void dataModelChanged() {
+        gameTrackTableModel.setTracks(this.getController().listTracksGesture());
+    }
+    
+    @Override
     public void display() {
-        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                setVisible(true);
+                dataModelChanged();
+            }
+        });
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel gameTrackPanel;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable trackTable;
     // End of variables declaration//GEN-END:variables
 }
