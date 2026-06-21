@@ -89,7 +89,6 @@ public class GameViewImpl extends javax.swing.JPanel implements GameView {
     public void display() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                setVisible(true);
                 dataModelChanged();
             }
         });

@@ -24,11 +24,18 @@ public class MainView extends javax.swing.JFrame {
         this.gameView = gameView;
         this.gameTrackView = gameTrackView;
         initComponents();
+        
+        // remove trash windows
+        this.jTabbedPane1.removeAll();
+        
         this.jTabbedPane1.add("User Profiles", (JPanel)userView);
         this.jTabbedPane1.add("Game Catalog", (JPanel)gameView);
         this.jTabbedPane1.add("My Log", (JPanel)gameTrackView);
         
         this.setTitle("GameLog - Personal Gaming Tracker");
+        
+        // start with gameTrack view
+        this.jTabbedPane1.setSelectedIndex(2);
         
         this.pack();
         this.setLocationRelativeTo(null); // center window on screen
@@ -102,9 +109,10 @@ public class MainView extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 setVisible(true);
+                gameTrackView.display();
                 userView.display();
                 gameView.display();
-                gameTrackView.display();
+                
             }
         });
     }

@@ -103,7 +103,6 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
     public void display() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                setVisible(true);
                 dataModelChanged();
             }
         });
