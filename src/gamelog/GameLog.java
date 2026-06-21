@@ -28,6 +28,7 @@ import view.game.GameViewImpl;
 import view.gametrack.GameTrackView;
 import view.gametrack.GameTrackViewImpl;
 import view.gametrack.PlatformComboModel;
+import view.gametrack.UserComboModel;
 import view.user.UserView;
 import view.user.UserViewImpl;
 
@@ -51,6 +52,8 @@ public class GameLog {
         
         UserController userController = new UserControllerImpl();
         userController.setup(userModel, userViews);
+        
+        UserComboModel.create().setUsers(userController.listUsersGesture());
         
         // GAMES
         GameModel gameModel = new GameModelImpl();

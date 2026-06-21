@@ -13,12 +13,15 @@ public class GameTrackViewImplInternal extends javax.swing.JPanel {
     private GameTrackViewImpl view;
     
     private PlatformComboModel platformComboModel;
+    private UserComboModel userComboModel;
     
     public GameTrackViewImplInternal(GameTrackViewImpl view) {
         this.view = view;
         this.platformComboModel = PlatformComboModel.create();
+        this.userComboModel = UserComboModel.create();
         initComponents();
         this.platformComboBox.setModel(this.platformComboModel);
+        this.userComboBox.setModel(this.userComboModel);
     }
 
     /**
@@ -34,7 +37,7 @@ public class GameTrackViewImplInternal extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        userComboBox = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         platformComboBox = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -48,7 +51,7 @@ public class GameTrackViewImplInternal extends javax.swing.JPanel {
 
         jLabel3.setText("Platform:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        userComboBox.setModel(userComboModel);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -76,7 +79,7 @@ public class GameTrackViewImplInternal extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(platformComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(343, Short.MAX_VALUE)
@@ -95,7 +98,7 @@ public class GameTrackViewImplInternal extends javax.swing.JPanel {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(1, 1, 1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -135,7 +138,6 @@ public class GameTrackViewImplInternal extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
@@ -146,5 +148,6 @@ public class GameTrackViewImplInternal extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JComboBox<String> platformComboBox;
+    private javax.swing.JComboBox<String> userComboBox;
     // End of variables declaration//GEN-END:variables
 }
