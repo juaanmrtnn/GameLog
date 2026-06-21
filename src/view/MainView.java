@@ -30,7 +30,7 @@ public class MainView extends javax.swing.JFrame {
         
         this.setTitle("GameLog - Personal Gaming Tracker");
         
-        this.setSize(600, 550);
+        this.pack();
         this.setLocationRelativeTo(null); // center window on screen
     }
 

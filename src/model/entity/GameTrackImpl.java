@@ -28,6 +28,15 @@ public class GameTrackImpl implements GameTrack {
     public GameTrackImpl(int id){
         this(id,null,null,null,null,0.0);
     }
+    
+    public GameTrackImpl(User user, Game game, Platform platform, String progress, Double playedHours) {
+        this.id = 0;
+        this.user = user;
+        this.game = game;
+        this.platform = platform;
+        this.progress = progress;
+        this.playedHours = playedHours;
+    }
 
     public int getId() {
         return id;

@@ -5,6 +5,7 @@
 package view.gametrack;
 
 import controller.GameTrackController;
+import model.entity.GameTrack;
 
 /**
  *
@@ -90,6 +91,31 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
                 dataModelChanged();
             }
         });
+    }
+    
+    public void fireSetTrackGesture(String userId, String gameId, String platformId, String progress, String playedHours){
+        this.controller.setTrackGesture(userId, gameId, platformId, progress, playedHours);
+    }
+    
+    public String getSelectedTrackId(){
+        int selectedRow = this.trackTable.getSelectedRow();
+        
+        // no row selected
+        if(selectedRow == -1){
+            return null;
+        }
+        
+        GameTrack selectedTrack = this.gameTrackTableModel.getTracks().get(selectedRow);
+        
+        return String.valueOf(selectedTrack.getId());
+    }
+    
+    public void updateTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours){
+        this.controller.updateTrackGesture(id, userId, gameId, platformId, progress, playedHours);
+    }
+    
+    public void deleteTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours){
+        this.controller.deleteTrackGesture(id, userId, gameId, platformId, progress, playedHours);
     }
 
 

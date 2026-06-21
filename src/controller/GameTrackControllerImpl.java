@@ -70,8 +70,8 @@ public class GameTrackControllerImpl implements GameTrackController {
     }
 
     @Override
-    public void setTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours) {
-        GameTrack t = new GameTrackImpl(Integer.parseInt(id), new UserImpl(Integer.parseInt(userId)), new GameImpl(Integer.parseInt(gameId)), new PlatformImpl(Integer.parseInt(platformId)), progress, Double.parseDouble(playedHours));
+    public void setTrackGesture(String userId, String gameId, String platformId, String progress, String playedHours) {
+        GameTrack t = new GameTrackImpl(new UserImpl(Integer.parseInt(userId)), new GameImpl(Integer.parseInt(gameId)), new PlatformImpl(Integer.parseInt(platformId)), progress, Double.parseDouble(playedHours));
         this.model.setTrack(t);
         
     }

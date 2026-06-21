@@ -8,9 +8,12 @@ import model.entity.GameTrack;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.entity.Game;
 import model.entity.GameImpl;
 import model.entity.GameTrackImpl;
+import model.entity.Platform;
 import model.entity.PlatformImpl;
+import model.entity.User;
 import model.entity.UserImpl;
 import model.persistence.GameTrackDAO;
 /**
@@ -99,14 +102,25 @@ public class GameTrackDAOJDBC implements GameTrackDAO {
     @Override
     public List<GameTrack> list(){
         List<GameTrack> tracks = new ArrayList<>();
-        String sql = "select * from game_track";
+        String sql = "SELECT t.id, t.user_id, t.game_id, t.platform_id, t.progress, t.played_hours, " +
+                     "u.username, u.email, " +
+                     "g.title, g.studio, g.launch_year, " +
+                     "p.platform " +
+                     "FROM game_track t " +
+                     "INNER JOIN users u ON t.user_id = u.user_id " +
+                     "INNER JOIN games g ON t.game_id = g.id " +
+                     "INNER JOIN platforms p ON t.platform_id = p.id";
         
         try {
             Statement stmt = Persistence.createConnection().createStatement();
             ResultSet res = stmt.executeQuery(sql);
             
             while(res.next()){
-                tracks.add(new GameTrackImpl(res.getInt("id"), new UserImpl(res.getInt("user_id")), new GameImpl(res.getInt("game_id")), new PlatformImpl(res.getInt("platform_id")), res.getString("progress"), res.getDouble("played_hours")));
+                User user = new UserImpl(res.getInt("user_id"), res.getString("username"), res.getString("email"));
+                Game game = new GameImpl(res.getInt("game_id"), res.getString("title"), res.getString("studio"), res.getInt("launch_year"));
+                Platform platform = new PlatformImpl(res.getInt("platform_id"), res.getString("platform"));
+                
+                tracks.add(new GameTrackImpl(res.getInt("id"), user, game, platform, res.getString("progress"), res.getDouble("played_hours")));
             }
             res.close();
             

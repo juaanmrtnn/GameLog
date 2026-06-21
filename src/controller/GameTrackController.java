@@ -28,7 +28,7 @@ public interface GameTrackController {
     
     public void removeView(GameTrackView view);
     
-    public void setTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours);
+    public void setTrackGesture(String userId, String gameId, String platformId, String progress, String playedHours);
     
     public GameTrack getTrackGesture(String id);
     
