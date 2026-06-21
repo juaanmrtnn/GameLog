@@ -38,6 +38,7 @@ public class GameComboModel implements ComboBoxModel {
 
     public void setGames(List<Game> games) {
         this.games = games;
+        this.gameSelected = null;
         fireContentsChanged();
     }
 

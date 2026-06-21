@@ -132,7 +132,7 @@ public class GameTrackTableModel implements TableModel {
 
     protected void fireContentsChangedTableModel() {
         
-        TableModelEvent event = new TableModelEvent(this, 0, this.getRowCount() - 1, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT);
+        TableModelEvent event = new TableModelEvent(this);
         for (TableModelListener listener : tableListeners) {
             listener.tableChanged(event);
         }

@@ -5,6 +5,8 @@
 package view.gametrack;
 
 import controller.GameTrackController;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import model.entity.GameTrack;
 
 /**
@@ -26,6 +28,20 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
         initComponents();
         this.gameTrackPanelInternal = new GameTrackViewImplInternal(this);
         this.gameTrackPanel.add(this.gameTrackPanelInternal);
+        
+        // listens to selection changes in table
+        this.trackTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    int selectedRow = trackTable.getSelectedRow();
+                    if (selectedRow != -1) {
+                        GameTrack selectedTrack = gameTrackTableModel.getRow(selectedRow);
+                        gameTrackPanelInternal.loadSelectedTrack(selectedTrack);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -110,11 +126,12 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
         return String.valueOf(selectedTrack.getId());
     }
     
-    public void updateTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours){
+    public void fireUpdateTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours){
         this.controller.updateTrackGesture(id, userId, gameId, platformId, progress, playedHours);
     }
     
-    public void deleteTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours){
+    // not implemented yet
+    public void fireDeleteTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours){
         this.controller.deleteTrackGesture(id, userId, gameId, platformId, progress, playedHours);
     }
 

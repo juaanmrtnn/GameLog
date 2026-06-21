@@ -38,6 +38,7 @@ public class PlatformComboModel implements ComboBoxModel {
 
     public void setPlatforms(List<Platform> platforms) {
         this.platforms = platforms;
+        this.platformSelected = null;
         fireContentsChanged();
     }
 

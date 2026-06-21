@@ -38,6 +38,7 @@ public class UserComboModel implements ComboBoxModel {
 
     public void setUsers(List<User> users) {
         this.users = users;
+        this.userSelected = null;
         fireContentsChanged();
     }
 

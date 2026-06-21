@@ -7,6 +7,7 @@ package view.gametrack;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import model.entity.Game;
+import model.entity.GameTrack;
 import model.entity.Platform;
 import model.entity.User;
 
@@ -187,9 +188,65 @@ public class GameTrackViewImplInternal extends javax.swing.JPanel {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            String id = view.getSelectedTrackId();
+            
+            if(id == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, select a track clicking on it.", "Warning", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            User user = (User)this.userComboBox.getSelectedItem();
+            Game game = (Game)this.gameComboBox.getSelectedItem();
+            Platform platform = (Platform)this.platformComboBox.getSelectedItem();
+            String playedHours = this.playedHoursTextField.getText();
+            String progress = this.progressComboBox.getSelectedItem().toString();
+            
+            if (playedHours.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, introduce the game's played hours.", "Warning", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            String userId = String.valueOf(user.getId());
+            String gameId = String.valueOf(game.getId());
+            String platformId = String.valueOf(platform.getId());
+
+            view.fireUpdateTrackGesture(id, userId, gameId, platformId, progress, playedHours);
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        } 
     }//GEN-LAST:event_updateButtonActionPerformed
 
+    
+    // filling combobox method
+    public void loadSelectedTrack(GameTrack track) {
+        this.playedHoursTextField.setText(String.valueOf(track.getPlayedHours()));
+        this.progressComboBox.setSelectedItem(track.getProgress());
+        
+        for (int i = 0; i < userComboModel.getSize(); i++) {
+            User u = (User) userComboModel.getElementAt(i);
+            if (u.getId() == track.getUser().getId()) {
+                this.userComboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+        
+        for (int i = 0; i < gameComboModel.getSize(); i++) {
+            Game g = (Game) gameComboModel.getElementAt(i);
+            if (g.getId() == track.getGame().getId()) {
+                this.gameComboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+        
+        for (int i = 0; i < platformComboModel.getSize(); i++) {
+            Platform p = (Platform) platformComboModel.getElementAt(i);
+            if (p.getId() == track.getPlatform().getId()) {
+                this.platformComboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
