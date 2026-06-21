@@ -25,6 +25,7 @@ import model.UserModelImpl;
 import view.MainView;
 import view.game.GameView;
 import view.game.GameViewImpl;
+import view.gametrack.GameComboModel;
 import view.gametrack.GameTrackView;
 import view.gametrack.GameTrackViewImpl;
 import view.gametrack.PlatformComboModel;
@@ -64,6 +65,8 @@ public class GameLog {
         
         GameController gameController = new GameControllerImpl();
         gameController.setup(gameModel, gameViews);
+        
+        GameComboModel.create().setGames(gameController.listGamesGesture());
         
         // GAME TRACKS
         GameTrackModel gameTrackModel = new GameTrackModelImpl();
