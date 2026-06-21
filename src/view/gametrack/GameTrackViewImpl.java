@@ -15,6 +15,7 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
     private GameTrackController controller;
     
     private GameTrackTableModel gameTrackTableModel;
+    private GameTrackViewImplInternal gameTrackPanelInternal;
     
     /**
      * Creates new form GameTrackViewImpl
@@ -22,7 +23,8 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
     public GameTrackViewImpl() {
         this.gameTrackTableModel = new GameTrackTableModel();
         initComponents();
-        
+        this.gameTrackPanelInternal = new GameTrackViewImplInternal(this);
+        this.gameTrackPanel.add(this.gameTrackPanelInternal);
     }
 
     /**
@@ -41,16 +43,7 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
         trackTable.setModel(gameTrackTableModel);
         jScrollPane1.setViewportView(trackTable);
 
-        javax.swing.GroupLayout gameTrackPanelLayout = new javax.swing.GroupLayout(gameTrackPanel);
-        gameTrackPanel.setLayout(gameTrackPanelLayout);
-        gameTrackPanelLayout.setHorizontalGroup(
-            gameTrackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        gameTrackPanelLayout.setVerticalGroup(
-            gameTrackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 169, Short.MAX_VALUE)
-        );
+        gameTrackPanel.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

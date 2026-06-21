@@ -27,6 +27,7 @@ import view.game.GameView;
 import view.game.GameViewImpl;
 import view.gametrack.GameTrackView;
 import view.gametrack.GameTrackViewImpl;
+import view.gametrack.PlatformComboModel;
 import view.user.UserView;
 import view.user.UserViewImpl;
 
@@ -76,6 +77,8 @@ public class GameLog {
         
         PlatformController platformController = new PlatformControllerImpl();
         platformController.setup(platformModel);
+        
+        PlatformComboModel.create().setPlatforms(platformController.listPlatformsGesture());
         
         // MAIN VIEW
         MainView mainView1 = new MainView(userView1, gameView1, gameTrackView1);
