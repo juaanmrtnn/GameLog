@@ -1,0 +1,3948 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package controller;
+
+import java.util.List;
+import model.GameModel;
+import model.entity.Game;
+import view.game.GameView;
+
+/**
+ *
+ * @author juanito
+ */
+public interface GameController {
+    
+    public GameModel getModel();
+    
+    public void setModel(GameModel model);
+    
+    // bind model to view
+    public void setup(GameModel model, List<GameView> views);
+    
+    public void start();
+    
+    public void addView(GameView view);
+    
+    public void removeView(GameView view);
+    
+    public void setGameGesture(String title, String studio, String launchYear);
+    
+    public Game getGameGesture(String id);
+    
+    public void updateGameGesture(String id, String title, String studio, String launchYear);
+    
+    public void deleteGameGesture(String id, String title, String studio, String launchYear);
+    
+    public List<Game> listGamesGesture();
+    
+    public void fireDataModelChanged();
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package controller;
+
+import java.util.List;
+import model.GameTrackModel;
+import model.entity.GameTrack;
+import view.gametrack.GameTrackView;
+
+/**
+ *
+ * @author juanito
+ */
+public interface GameTrackController {
+    
+    public GameTrackModel getModel();
+    
+    public void setModel(GameTrackModel model);
+    
+    // bind model to view
+    public void setup(GameTrackModel model, List<GameTrackView> views);
+    
+    public void start();
+    
+    public void addView(GameTrackView view);
+    
+    public void removeView(GameTrackView view);
+    
+    public void setTrackGesture(String userId, String gameId, String platformId, String progress, String playedHours);
+    
+    public GameTrack getTrackGesture(String id);
+    
+    public void updateTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours);
+    
+    public void deleteTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours);
+    
+    public List<GameTrack> listTracksGesture();
+    
+    public void fireDataModelChanged();
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package controller;
+
+import java.util.List;
+import model.PlatformModel;
+import model.entity.Platform;
+
+/**
+ *
+ * @author juanito
+ */
+public class PlatformControllerImpl implements PlatformController {
+    
+    private PlatformModel model;
+
+    @Override
+    public PlatformModel getModel() {
+        return model;
+    }
+
+    @Override
+    public void setModel(PlatformModel model) {
+        this.model = model;
+    }
+
+    @Override
+    public void setup(PlatformModel model) {
+        this.setModel(model);
+        model.setController(this);
+    }
+
+    @Override
+    public Platform getPlatformGesture(String id) {
+        return this.model.getPlatform(Integer.parseInt(id));
+    }
+
+    @Override
+    public List<Platform> listPlatformsGesture() {
+        return this.model.listPlatforms();
+    }
+    
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import model.UserModel;
+import model.entity.User;
+import model.entity.UserImpl;
+import view.user.UserView;
+
+/**
+ *
+ * @author juanito
+ */
+public class UserControllerImpl implements UserController {
+    
+    private UserModel model;
+    private List<UserView> views;
+    
+    public UserControllerImpl(){
+        this.views = new ArrayList<>();
+    }
+
+    @Override
+    public UserModel getModel() {
+        return model;
+    }
+
+    @Override
+    public void setModel(UserModel model) {
+        this.model = model;
+    }
+
+    @Override
+    public void setup(UserModel model, List<UserView> views) {
+        this.setModel(model);
+        model.setController(this);
+        this.addViews(views);
+        
+    }
+
+    @Override
+    public void start() {
+        for(UserView view : views){
+            view.display();
+        }
+    }
+
+    @Override
+    public void addView(UserView view) {
+        view.setController(this);
+        this.views.add(view);
+    }
+    
+    public void addViews(List<UserView> views){
+        for(UserView v : views){
+            this.addView(v);
+        }
+    }
+
+    @Override
+    public void removeView(UserView view) {
+        this.views.remove(view);
+    }
+
+    @Override
+    public void setUserGesture(String username, String email) {
+        User u = new UserImpl(username, email);
+        this.model.setUser(u);
+        this.fireDataModelChanged();
+    }
+
+    @Override
+    public User getUserGesture(String id) {
+        return this.model.getUser(Integer.parseInt(id));
+    }
+    
+    @Override
+    public User getUserByUsernameGesture(String username) {
+        return this.model.getUserByUsername(username);
+    }
+
+    @Override
+    public void updateUserGesture(String id, String username, String email) {
+        User u = new UserImpl(Integer.parseInt(id), username, email);
+        this.model.updateUser(u);
+        this.fireDataModelChanged();
+    }
+
+    @Override
+    public void deleteUserGesture(String id, String username, String email) {
+        User u = new UserImpl(Integer.parseInt(id), username, email);
+        this.model.deleteUser(u);
+        this.fireDataModelChanged();
+    }
+
+    @Override
+    public List<User> listUsersGesture() {
+        return this.model.listUsers();
+    }
+
+    @Override
+    public void fireDataModelChanged() {
+        for (UserView v: this.views) {
+            v.display();
+        }
+    }
+    
+    
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import model.GameTrackModel;
+import model.entity.GameImpl;
+import model.entity.GameTrack;
+import model.entity.GameTrackImpl;
+import model.entity.PlatformImpl;
+import model.entity.UserImpl;
+import view.gametrack.GameTrackView;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameTrackControllerImpl implements GameTrackController {
+    
+    private GameTrackModel model;
+    private List<GameTrackView> views;
+    
+    public GameTrackControllerImpl(){
+        this.views = new ArrayList<>();
+    }
+
+    @Override
+    public GameTrackModel getModel() {
+        return model;
+    }
+
+    @Override
+    public void setModel(GameTrackModel model) {
+        this.model = model;
+    }
+
+    @Override
+    public void setup(GameTrackModel model, List<GameTrackView> views) {
+        this.setModel(model);
+        model.setController(this);
+        this.addViews(views);
+    }
+
+    @Override
+    public void start() {
+        for(GameTrackView v : views){
+            v.display();
+        }
+    }
+
+    @Override
+    public void addView(GameTrackView view) {
+        view.setController(this);
+        this.views.add(view);
+    }
+    
+    public void addViews(List<GameTrackView> views){
+        for(GameTrackView v : views){
+            this.addView(v);
+        }
+    }
+
+    @Override
+    public void removeView(GameTrackView view) {
+        this.views.remove(view);
+    }
+
+    @Override
+    public void setTrackGesture(String userId, String gameId, String platformId, String progress, String playedHours) {
+        GameTrack t = new GameTrackImpl(new UserImpl(Integer.parseInt(userId)), new GameImpl(Integer.parseInt(gameId)), new PlatformImpl(Integer.parseInt(platformId)), progress, Double.parseDouble(playedHours));
+        this.model.setTrack(t);
+        
+    }
+
+    @Override
+    public GameTrack getTrackGesture(String id) {
+        return this.model.getTrack(Integer.parseInt(id));
+    }
+
+    @Override
+    public void updateTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours) {
+        GameTrack t = new GameTrackImpl(Integer.parseInt(id), new UserImpl(Integer.parseInt(userId)), new GameImpl(Integer.parseInt(gameId)), new PlatformImpl(Integer.parseInt(platformId)), progress, Double.parseDouble(playedHours));
+        this.model.updateTrack(t);
+    }
+
+    @Override
+    public void deleteTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours) {
+        GameTrack t = new GameTrackImpl(Integer.parseInt(id), new UserImpl(Integer.parseInt(userId)), new GameImpl(Integer.parseInt(gameId)), new PlatformImpl(Integer.parseInt(platformId)), progress, Double.parseDouble(playedHours));
+        this.model.deleteTrack(t);
+    }
+
+    @Override
+    public List<GameTrack> listTracksGesture() {
+        return this.model.listTracks();
+    }
+
+    @Override
+    public void fireDataModelChanged() {
+        for (GameTrackView v: this.views) {
+            v.display();
+        }
+    }
+    
+    
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import model.GameModel;
+import model.entity.Game;
+import model.entity.GameImpl;
+import view.game.GameView;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameControllerImpl implements GameController {
+    
+    private GameModel model;
+    private List<GameView> views;
+
+    public GameControllerImpl() {
+        this.views = new ArrayList<>();
+    }
+    
+    
+    @Override
+    public GameModel getModel() {
+        return model;
+    }
+
+    @Override
+    public void setModel(GameModel model) {
+        this.model = model;
+    }
+
+    @Override
+    public void setup(GameModel model, List<GameView> views) {
+        this.setModel(model);
+        model.setController(this);
+        this.addViews(views);
+    }
+
+    @Override
+    public void start() {
+        for(GameView view : views){
+            view.display();
+        }
+    }
+
+    @Override
+    public void addView(GameView view){
+        view.setController(this); // 1. Le decimos a la vista quién es su controlador
+        this.views.add(view);     // 2. Metemos la vista en nuestra lista interna
+    }
+    
+    public void addViews(List<GameView> views) {
+        for(GameView view : views){
+            this.addView(view);   // 3. Reutilizamos el método de arriba para cada vista
+        }
+    }
+    
+    public void removeView(GameView view){
+        this.views.remove(view);
+    }
+
+    @Override
+    public void setGameGesture(String title, String studio, String launchYear) {
+        Game game = new GameImpl(title, studio, Integer.parseInt(launchYear));
+        this.model.setGame(game);
+    }
+
+    @Override
+    public Game getGameGesture(String id) {
+        Game game = this.model.getGame(Integer.parseInt(id));
+        return game;
+    }
+
+    @Override
+    public void updateGameGesture(String id, String title, String studio, String launchYear) {
+        Game game = new GameImpl(Integer.parseInt(id), title, studio, Integer.parseInt(launchYear));
+        this.model.updateGame(game);
+    }
+
+    @Override
+    public void deleteGameGesture(String id, String title, String studio, String launchYear) {
+        Game game = new GameImpl(Integer.parseInt(id)); 
+        this.model.deleteGame(game);
+    }
+
+    @Override
+    public List<Game> listGamesGesture() {
+        return this.model.listGames();
+    }
+    
+    @Override
+    public void fireDataModelChanged() {
+        for (GameView v: this.views) {
+            v.display();
+        }
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package controller;
+
+import java.util.List;
+import model.PlatformModel;
+import model.entity.Platform;
+
+/**
+ *
+ * @author juanito
+ */
+public interface PlatformController {
+    
+    public PlatformModel getModel();
+    
+    public void setModel(PlatformModel model);
+    
+    // bind model to view
+    public void setup(PlatformModel model);
+            
+    public Platform getPlatformGesture(String id);
+    
+    public List<Platform> listPlatformsGesture();
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package controller;
+
+import java.util.List;
+import model.UserModel;
+import model.entity.User;
+import view.user.UserView;
+
+/**
+ *
+ * @author juanito
+ */
+public interface UserController {
+    
+    public UserModel getModel();
+    
+    public void setModel(UserModel model);
+    
+    // bind model to view
+    public void setup(UserModel model, List<UserView> views);
+    
+    public void start();
+    
+    public void addView(UserView view);
+    
+    public void removeView(UserView view);
+    
+    public void setUserGesture(String username, String email);
+    
+    public User getUserGesture(String id);
+    
+    public User getUserByUsernameGesture(String username);
+    
+    public void updateUserGesture(String id, String username, String email);
+    
+    public void deleteUserGesture(String id, String username, String email);
+    
+    public List<User> listUsersGesture();
+    
+    public void fireDataModelChanged();
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package gamelog;
+
+import controller.GameController;
+import controller.GameControllerImpl;
+import controller.GameTrackController;
+import controller.GameTrackControllerImpl;
+import controller.PlatformController;
+import controller.PlatformControllerImpl;
+import controller.UserController;
+import controller.UserControllerImpl;
+import java.util.ArrayList;
+import java.util.List;
+import model.GameModel;
+import model.GameModelImpl;
+import model.GameTrackModel;
+import model.GameTrackModelImpl;
+import model.PlatformModel;
+import model.PlatformModelImpl;
+import model.UserModel;
+import model.UserModelImpl;
+import view.MainView;
+import view.game.GameView;
+import view.game.GameViewImpl;
+import view.gametrack.GameComboModel;
+import view.gametrack.GameTrackView;
+import view.gametrack.GameTrackViewImpl;
+import view.gametrack.PlatformComboModel;
+import view.gametrack.UserComboModel;
+import view.user.UserView;
+import view.user.UserViewImpl;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameLog {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        // USERS
+        UserModel userModel = new UserModelImpl();
+        
+        UserView userView1 = new UserViewImpl();
+        List<UserView> userViews = new ArrayList<UserView>();
+        userViews.add(userView1);
+        
+        UserController userController = new UserControllerImpl();
+        userController.setup(userModel, userViews);
+        
+        UserComboModel.create().setUsers(userController.listUsersGesture());
+        
+        // GAMES
+        GameModel gameModel = new GameModelImpl();
+        
+        GameView gameView1 = new GameViewImpl();
+        List<GameView> gameViews = new ArrayList<>();
+        gameViews.add(gameView1);
+        
+        GameController gameController = new GameControllerImpl();
+        gameController.setup(gameModel, gameViews);
+        
+        GameComboModel.create().setGames(gameController.listGamesGesture());
+        
+        // GAME TRACKS
+        GameTrackModel gameTrackModel = new GameTrackModelImpl();
+        
+        GameTrackView gameTrackView1 = new GameTrackViewImpl();
+        List<GameTrackView> gameTrackViews = new ArrayList<>();
+        gameTrackViews.add(gameTrackView1);
+        
+        GameTrackController gameTrackController = new GameTrackControllerImpl();
+        gameTrackController.setup(gameTrackModel, gameTrackViews);
+        
+        // PLATFORMS
+        PlatformModel platformModel = new PlatformModelImpl();
+        
+        PlatformController platformController = new PlatformControllerImpl();
+        platformController.setup(platformModel);
+        
+        PlatformComboModel.create().setPlatforms(platformController.listPlatformsGesture());
+        
+        // MAIN VIEW
+        MainView mainView1 = new MainView(userView1, gameView1, gameTrackView1);
+        
+        mainView1.display();
+        
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+import controller.GameController;
+import java.util.List;
+import model.entity.Game;
+import model.persistence.GameDAO;
+import model.persistence.JDBC.GameDAOJDBC;
+import view.game.GameView;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameModelImpl implements GameModel {
+    
+    private GameController controller;
+
+    @Override
+    public GameController getController() {
+        return controller;
+    }
+
+    @Override
+    public void setController(GameController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void setGame(Game game) {
+        GameDAO dao = new GameDAOJDBC();
+        dao.create(game);
+        this.controller.fireDataModelChanged();
+    }
+
+    @Override
+    public Game getGame(int id) {
+        GameDAO dao = new GameDAOJDBC();
+        Game game = dao.read(id);
+        return game;
+    }
+
+    @Override
+    public void updateGame(Game game) {
+        GameDAO dao = new GameDAOJDBC();
+        dao.update(game);
+        this.controller.fireDataModelChanged();
+    }
+
+    @Override
+    public void deleteGame(Game game) {
+        GameDAO dao = new GameDAOJDBC();
+        dao.delete(game);
+        this.controller.fireDataModelChanged();
+    }
+
+    @Override
+    public List<Game> listGames() {
+        GameDAO dao = new GameDAOJDBC();
+        return dao.list();
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+import controller.UserController;
+import java.util.List;
+import model.entity.User;
+import model.persistence.JDBC.UserDAOJDBC;
+import model.persistence.UserDAO;
+
+/**
+ *
+ * @author juanito
+ */
+public class UserModelImpl implements UserModel {
+    
+    private UserController controller;
+
+    @Override
+    public UserController getController() {
+        return controller;
+    }
+
+    @Override
+    public void setController(UserController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void setUser(User user) {
+        UserDAO dao = new UserDAOJDBC();
+        dao.create(user);
+        this.controller.fireDataModelChanged();
+    }
+
+    @Override
+    public User getUser(int id) {
+        UserDAO dao = new UserDAOJDBC();
+        return dao.read(id);
+    }
+    
+    @Override
+    public User getUserByUsername(String username) {
+        UserDAO dao = new UserDAOJDBC();
+        return dao.readByUsername(username);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        UserDAO dao = new UserDAOJDBC();
+        dao.update(user);
+        this.controller.fireDataModelChanged();
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        UserDAO dao = new UserDAOJDBC();
+        dao.delete(user);
+        this.controller.fireDataModelChanged();
+    }
+
+    @Override
+    public List<User> listUsers() {
+        UserDAO dao = new UserDAOJDBC();
+        return dao.list();
+    }
+    
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model.entity;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameImpl implements Game {
+    
+    private int id;
+    private String title;
+    private String studio;
+    private int launchYear;
+
+    public GameImpl(int id, String title, String studio, int launchYear) {
+        this.id = id;
+        this.title = title;
+        this.studio = studio;
+        this.launchYear = launchYear;
+    }
+    
+    public GameImpl(int id){
+        this(id, null, null, 0);
+    }
+    
+    public GameImpl(String title, String studio, int launchYear){
+        this.id = 0;
+        this.title = title;
+        this.studio = studio;
+        this.launchYear = launchYear;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getStudio() {
+        return studio;
+    }
+
+    @Override
+    public void setStudio(String studio) {
+        this.studio = studio;
+    }
+
+    @Override
+    public int getLaunchYear() {
+        return launchYear;
+    }
+
+    @Override
+    public void setLaunchYear(int launchYear) {
+        this.launchYear = launchYear;
+    }
+    
+    @Override
+    public String toString(){
+        return this.title;
+    }
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model.entity;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author juanito
+ */
+public interface GameTrack extends Serializable {
+    
+    public int getId();
+
+    public void setId(int id);
+    
+    public User getUser();
+
+    public void setUser(User user);
+
+    public Game getGame();
+    
+    public void setGame(Game game);
+
+    public Platform getPlatform();
+    
+    public void setPlatform(Platform platform);
+            
+    public String getProgress();
+
+    public void setProgress(String progress);
+
+    public Double getPlayedHours();
+
+    public void setPlayedHours(Double playedHours);
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model.entity;
+
+/**
+ *
+ * @author juanito
+ */
+public class UserImpl implements User {
+    
+    private int id;
+    private String username;
+    private String email;
+
+    public UserImpl(int id, String username, String email) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        
+    }
+    
+    public UserImpl(int id){
+        this(id, null, null);
+    }
+
+    // constructor overloading to handle search by username operation
+    public UserImpl(String username){
+        this(0, username, null);
+    }
+    
+    // constructor overloading to handle auto-increment ids
+    public UserImpl(String username, String email){
+        this.id = 0;
+        this.username = username;
+        this.email = email;
+    }
+    
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
+    @Override
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    @Override
+    public String toString(){
+        return this.username;
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model.entity;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author juanito
+ */
+public interface User extends Serializable {
+    
+    public int getId();
+
+    public void setId(int id);
+
+    public String getUsername();
+    
+    public void setUsername(String username);
+    
+    public String getEmail();
+
+    public void setEmail(String email);
+    
+    public String toString();
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model.entity;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author juanito
+ */
+public interface Platform extends Serializable {
+    
+    public String getPlatform();
+
+    public void setPlatform(String platform);
+    
+    public int getId();
+
+    public void setId(int id);
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model.entity;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameTrackImpl implements GameTrack {
+    private int id;
+    private User user;
+    private Game game;
+    private Platform platform;
+    private String progress;
+    private Double playedHours;
+
+    public GameTrackImpl(int id, User user, Game game, Platform platform, String progress, Double playedHours) {
+        this.id = id;
+        this.user = user;
+        this.game = game;
+        this.platform = platform;
+        this.progress = progress;
+        this.playedHours = playedHours;
+    }
+    
+    public GameTrackImpl(int id){
+        this(id,null,null,null,null,0.0);
+    }
+    
+    public GameTrackImpl(User user, Game game, Platform platform, String progress, Double playedHours) {
+        this.id = 0;
+        this.user = user;
+        this.game = game;
+        this.platform = platform;
+        this.progress = progress;
+        this.playedHours = playedHours;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    @Override
+    public User getUser() {
+        return user;
+    }
+
+    @Override
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public Game getGame() {
+        return game;
+    }
+
+    @Override
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    @Override
+    public Platform getPlatform() {
+        return platform;
+    }
+
+    @Override
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
+    }
+
+    @Override
+    public String getProgress() {
+        return progress;
+    }
+
+    @Override
+    public void setProgress(String progress) {
+        this.progress = progress;
+    }
+
+    @Override
+    public Double getPlayedHours() {
+        return playedHours;
+    }
+
+    @Override
+    public void setPlayedHours(Double playedHours) {
+        this.playedHours = playedHours;
+    }
+
+    
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model.entity;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author juanito
+ */
+public interface Game extends Serializable {
+    
+    public int getId();
+
+    public void setId(int id);
+
+    public String getTitle();
+
+    public void setTitle(String title);
+
+    public String getStudio();
+
+    public void setStudio(String studio);
+
+    public int getLaunchYear();
+
+    public void setLaunchYear(int launchYear);
+
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model.entity;
+
+/**
+ *
+ * @author juanito
+ */
+public class PlatformImpl implements Platform{
+    
+    private int id;
+    private String platform;
+
+    public PlatformImpl(int id, String platform) {
+        this.id = id;
+        this.platform = platform;
+    }
+    
+    public PlatformImpl(int id){
+        this(id, null);
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    @Override
+    public String getPlatform() {
+        return platform;
+    }
+
+    @Override
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+    
+    @Override
+    public String toString(){
+        return this.platform;
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model;
+
+import controller.GameTrackController;
+import java.util.List;
+import model.entity.GameTrack;
+
+/**
+ *
+ * @author juanito
+ */
+public interface GameTrackModel {
+    
+    public GameTrackController getController();
+    
+    public void setController(GameTrackController controller);
+    
+    public void setTrack(GameTrack track);
+    
+    public GameTrack getTrack(int id);
+    
+    public void updateTrack(GameTrack track);
+    
+    public void deleteTrack(GameTrack track);
+    
+    public List<GameTrack> listTracks();
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model;
+
+import controller.PlatformController;
+import java.util.List;
+import model.entity.Platform;
+
+/**
+ *
+ * @author juanito
+ */
+public interface PlatformModel {
+    
+    public PlatformController getController();
+    
+    public void setController(PlatformController controller);
+    
+    public Platform getPlatform(int id);
+    
+    public List<Platform> listPlatforms();
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+import controller.PlatformController;
+import java.util.List;
+import model.entity.Platform;
+import model.persistence.PlatformDAO;
+import model.persistence.JDBC.PlatformDAOJDBC;
+
+/**
+ *
+ * @author juanito
+ */
+public class PlatformModelImpl implements PlatformModel {
+    
+    private PlatformController controller;
+
+    @Override
+    public PlatformController getController() {
+        return controller;
+    }
+
+    @Override
+    public void setController(PlatformController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public Platform getPlatform(int id) {
+        PlatformDAO dao = new PlatformDAOJDBC();
+        return dao.read(id);
+    }
+
+    @Override
+    public List<Platform> listPlatforms() {
+        PlatformDAO dao = new PlatformDAOJDBC();
+        return dao.list();
+    }
+    
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+import controller.GameTrackController;
+import java.util.List;
+import model.entity.GameTrack;
+import model.persistence.GameTrackDAO;
+import model.persistence.JDBC.GameTrackDAOJDBC;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameTrackModelImpl implements GameTrackModel {
+    
+    private GameTrackController controller;
+
+    @Override
+    public GameTrackController getController() {
+        return controller;
+    }
+
+    @Override
+    public void setController(GameTrackController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void setTrack(GameTrack track) {
+        GameTrackDAO dao = new GameTrackDAOJDBC();
+        dao.create(track);
+        this.controller.fireDataModelChanged();
+    }
+
+    @Override
+    public GameTrack getTrack(int id) {
+        GameTrackDAO dao = new GameTrackDAOJDBC();
+        return dao.read(id);
+    }
+
+    @Override
+    public void updateTrack(GameTrack track) {
+        GameTrackDAO dao = new GameTrackDAOJDBC();
+        dao.update(track);
+        this.controller.fireDataModelChanged();
+    }
+
+    @Override
+    public void deleteTrack(GameTrack track) {
+        GameTrackDAO dao = new GameTrackDAOJDBC();
+        dao.delete(track);
+        this.controller.fireDataModelChanged();
+    }
+
+    @Override
+    public List<GameTrack> listTracks() {
+        GameTrackDAO dao = new GameTrackDAOJDBC();
+        return dao.list();
+    }
+    
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+/**
+ *
+ * @author juanito
+ */
+public class PlatformDAOJDBC {
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model.persistence;
+
+import java.util.List;
+import model.entity.User;
+
+/**
+ *
+ * @author juanito
+ */
+public interface UserDAO {
+    
+    public void create(User user);
+    
+    public User read(int id);
+    
+    public User readByUsername(String username);
+    
+    public void update(User user);
+    
+    public void delete(User user);
+    
+    public List<User> list();
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model.persistence;
+
+import java.util.List;
+import java.util.ArrayList;
+import model.entity.Game;
+
+/**
+ *
+ * @author juanito
+ */
+public interface GameDAO {
+    
+    public void create(Game game);
+    
+    public Game read(int id);
+    
+    public void update(Game game);
+    
+    public void delete(Game game);
+    
+    public List<Game> list();
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model.persistence;
+
+import java.util.List;
+import model.entity.Platform;
+
+/**
+ *
+ * @author juanito
+ */
+public interface PlatformDAO {
+    
+    public Platform read(int id);
+    
+    public List<Platform> list();
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model.persistence;
+
+import java.util.List;
+import model.entity.GameTrack;
+
+/**
+ *
+ * @author juanito
+ */
+public interface GameTrackDAO {
+    
+    public void create(GameTrack track);
+    
+    public GameTrack read(int id);
+    
+    public void update(GameTrack track);
+    
+    public void delete(GameTrack track);
+    
+    public List<GameTrack> list();
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model.persistence.JDBC;
+
+import model.entity.User;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import model.entity.UserImpl;
+import model.persistence.UserDAO;
+
+/**
+ *
+ * @author juanito
+ */
+public class UserDAOJDBC implements UserDAO {
+    
+    // CRUD operations to interact with the database
+    
+    @Override
+    public void create(User user){
+        String sql = "insert into users(username, email) values(?, ?)";
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getEmail());
+            pstmt.executeUpdate();
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+    }
+    
+    @Override
+    public User read(int id){
+        String sql = "select * from users where user_id = ?";
+        User u = null;
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet res = pstmt.executeQuery();
+            
+            u = new UserImpl(res.getInt("user_id"), res.getString("username"), res.getString("email"));
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+        
+        return u;
+    }
+    
+    @Override
+    public User readByUsername(String username) {
+        String sql = "select * from users where username = ?";
+        User u = null;
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet res = pstmt.executeQuery();
+            
+            u = new UserImpl(res.getInt("user_id"), res.getString("username"), res.getString("email"));
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+        
+        return u;
+    }
+    
+    @Override
+    public void update(User user){
+        String sql = "update users set username = ?, email = ? where user_id = ?";
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getEmail());
+            pstmt.setInt(3, user.getId());
+            pstmt.executeUpdate();
+            
+        } catch(SQLException e){
+            System.out.println(e);    
+        } finally {
+            Persistence.closeConnection();
+        }
+    }
+    
+    @Override
+    public void delete(User user){
+        String sql = "delete from users where user_id = ?";
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, user.getId());
+            pstmt.executeUpdate();
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+    }
+    
+    @Override
+    public List<User> list(){
+        List<User> users = new ArrayList<>();
+        String sql = "select * from users";
+        
+        try {
+            Statement stmt = Persistence.createConnection().createStatement();
+            ResultSet res = stmt.executeQuery(sql);
+            
+            while(res.next()){
+                users.add(new UserImpl(res.getInt("user_id"), res.getString("username"), res.getString("email")));
+            }
+            res.close();
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally{
+            Persistence.closeConnection();
+        }
+        
+        return users;
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model.persistence.JDBC;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author juanito
+ */
+public class Persistence {
+    
+    // xampp user login credentials
+    private static String login = "root";
+    private static String password = "";
+
+    // url to local database 
+    private static String url = "jdbc:mysql://localhost:3306/gamelog?zeroDateTimeBehavior=convertToNull&serverTimezone=UTC";
+
+    private static Connection conn = null;
+    
+    public static Connection createConnection() {
+        if (conn == null) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                conn = DriverManager.getConnection(url, login, password);
+            } catch (ClassNotFoundException e) {
+                System.out.println(e);
+            } catch (SQLException e) {
+                System.out.println(e);
+            } catch (java.lang.InstantiationException e) {
+                System.out.println(e);
+            } catch (java.lang.IllegalAccessException e) {
+                System.out.println(e);
+            }
+        }
+        return conn;
+    }
+
+    public static void closeConnection() {
+        try {
+            if (conn != null) {
+                conn.close();
+                conn = null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model.persistence.JDBC;
+
+import model.entity.GameTrack;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import model.entity.Game;
+import model.entity.GameImpl;
+import model.entity.GameTrackImpl;
+import model.entity.Platform;
+import model.entity.PlatformImpl;
+import model.entity.User;
+import model.entity.UserImpl;
+import model.persistence.GameTrackDAO;
+/**
+ *
+ * @author juanito
+ */
+public class GameTrackDAOJDBC implements GameTrackDAO {
+    
+    // CRUD operations to interact with the database
+    
+    @Override
+    public void create(GameTrack track){
+        String sql = "insert into game_track(user_id, game_id, platform_id, progress, played_hours) values(?, ?, ?, ?, ?)";
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, track.getUser().getId());
+            pstmt.setInt(2, track.getGame().getId());
+            pstmt.setInt(3, track.getPlatform().getId());
+            pstmt.setString(4, track.getProgress());
+            pstmt.setDouble(5, track.getPlayedHours());
+            pstmt.executeUpdate();
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+    }
+    
+    @Override
+    public GameTrack read(int id){
+        String sql = "select * from game_track where id = ?";
+        GameTrack t = null;
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet res = pstmt.executeQuery();
+            
+            t = new GameTrackImpl(res.getInt("id"), new UserImpl(res.getInt("user_id")), new GameImpl(res.getInt("game_id")), new PlatformImpl(res.getInt("platform_id")), res.getString("progress"), res.getDouble("played_hours"));
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+        
+        return t;
+    }
+    
+    @Override
+    public void update(GameTrack track){
+        String sql = "update game_track set user_id = ?, game_id = ?, platform_id = ?, progress = ?, played_hours = ? where id = ?";
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, track.getUser().getId());
+            pstmt.setInt(2, track.getGame().getId());
+            pstmt.setInt(3, track.getPlatform().getId());
+            pstmt.setString(4, track.getProgress());
+            pstmt.setDouble(5, track.getPlayedHours());
+            pstmt.setInt(6, track.getId());
+            pstmt.executeUpdate();
+            
+        } catch(SQLException e){
+            System.out.println(e);    
+        } finally {
+            Persistence.closeConnection();
+        }
+    }
+    
+    @Override
+    public void delete(GameTrack track){
+        String sql = "delete from game_track where id = ?";
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, track.getId());
+            pstmt.executeUpdate();
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+    }
+    
+    @Override
+    public List<GameTrack> list(){
+        List<GameTrack> tracks = new ArrayList<>();
+        String sql = "SELECT t.id, t.user_id, t.game_id, t.platform_id, t.progress, t.played_hours, " +
+                     "u.username, u.email, " +
+                     "g.title, g.studio, g.launch_year, " +
+                     "p.platform " +
+                     "FROM game_track t " +
+                     "INNER JOIN users u ON t.user_id = u.user_id " +
+                     "INNER JOIN games g ON t.game_id = g.id " +
+                     "INNER JOIN platforms p ON t.platform_id = p.id";
+        
+        try {
+            Statement stmt = Persistence.createConnection().createStatement();
+            ResultSet res = stmt.executeQuery(sql);
+            
+            while(res.next()){
+                User user = new UserImpl(res.getInt("user_id"), res.getString("username"), res.getString("email"));
+                Game game = new GameImpl(res.getInt("game_id"), res.getString("title"), res.getString("studio"), res.getInt("launch_year"));
+                Platform platform = new PlatformImpl(res.getInt("platform_id"), res.getString("platform"));
+                
+                tracks.add(new GameTrackImpl(res.getInt("id"), user, game, platform, res.getString("progress"), res.getDouble("played_hours")));
+            }
+            res.close();
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally{
+            Persistence.closeConnection();
+        }
+        
+        return tracks;
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model.persistence.JDBC;
+
+import model.entity.Platform;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import model.entity.PlatformImpl;
+import model.persistence.PlatformDAO;
+
+/**
+ *
+ * @author juanito
+ */
+public class PlatformDAOJDBC implements PlatformDAO {
+    // CRUD operations to interact with the database
+    
+    @Override
+    public Platform read(int id){
+        String sql = "select * from platforms where id = ?";
+        Platform p = null;
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet res = pstmt.executeQuery();
+            
+            p = new PlatformImpl(res.getInt("id"), res.getString("platform"));
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+        
+        return p;
+    }
+    
+    @Override
+    public List<Platform> list(){
+        List<Platform> platforms = new ArrayList<>();
+        String sql = "select * from platforms";
+        
+        try {
+            Statement stmt = Persistence.createConnection().createStatement();
+            ResultSet res = stmt.executeQuery(sql);
+            
+            while(res.next()){
+                platforms.add(new PlatformImpl(res.getInt("id"), res.getString("platform")));
+            }
+            res.close();
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally{
+            Persistence.closeConnection();
+        }
+        
+        return platforms;
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model.persistence.JDBC;
+
+import java.util.ArrayList;
+import java.util.List;
+import model.entity.Game;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import model.entity.GameImpl;
+import model.persistence.GameDAO;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameDAOJDBC implements GameDAO {
+    
+    // CRUD operations to interact with the database
+    
+    @Override
+    public void create(Game game){
+        String sql = "insert into games(title, studio, launch_year) values(?, ?, ?)";
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setString(1, game.getTitle());
+            pstmt.setString(2, game.getStudio());
+            pstmt.setInt(3, game.getLaunchYear());
+            pstmt.executeUpdate();
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+    }
+    
+    @Override
+    public Game read(int id){
+        String sql = "select * from games where id = ?";
+        Game g = null;
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet res = pstmt.executeQuery();
+            
+            g = new GameImpl(res.getInt("id"), res.getString("title"), res.getString("studio"), res.getInt("launch_year"));
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+        
+        return g;
+    }
+    
+    @Override
+    public void update(Game game){
+        String sql = "update games set title = ?, studio = ?, launch_year = ? where id = ?";
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setString(1, game.getTitle());
+            pstmt.setString(2, game.getStudio());
+            pstmt.setInt(3, game.getLaunchYear());
+            pstmt.setInt(4, game.getId());
+            pstmt.executeUpdate();
+            
+        } catch(SQLException e){
+            System.out.println(e);    
+        } finally {
+            Persistence.closeConnection();
+        }
+    }
+    
+    @Override
+    public void delete(Game game){
+        String sql = "delete  from games where id = ?";
+        
+        try {
+            PreparedStatement pstmt = Persistence.createConnection().prepareStatement(sql);
+            pstmt.setInt(1, game.getId());
+            pstmt.executeUpdate();
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally {
+            Persistence.closeConnection();
+        }
+    }
+    
+    @Override
+    public List<Game> list(){
+        List<Game> games = new ArrayList<>();
+        String sql = "select * from games";
+        
+        try {
+            Statement stmt = Persistence.createConnection().createStatement();
+            ResultSet res = stmt.executeQuery(sql);
+            
+            while(res.next()){
+                games.add(new GameImpl(res.getInt("id"), res.getString("title"), res.getString("studio"), res.getInt("launch_year")));
+            }
+            res.close();
+            
+        } catch(SQLException e){
+            System.out.println(e);
+        } finally{
+            Persistence.closeConnection();
+        }
+        
+        return games;
+    }
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model;
+
+import controller.UserController;
+import java.util.List;
+import model.entity.User;
+
+/**
+ *
+ * @author juanito
+ */
+public interface UserModel {
+    
+    public UserController getController();
+    
+    public void setController(UserController controller);
+    
+    public void setUser(User user);
+    
+    public User getUser(int id);
+    
+    public User getUserByUsername(String username);
+    
+    public void updateUser(User user);
+    
+    public void deleteUser(User user);
+    
+    public List<User> listUsers();
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package model;
+
+import controller.GameController;
+import java.util.List;
+import model.entity.Game;
+
+/**
+ *
+ * @author juanito
+ */
+public interface GameModel {
+    
+    public GameController getController();
+    
+    public void setController(GameController controller);
+    
+    public void setGame(Game game);
+    
+    public Game getGame(int id);
+    
+    public void updateGame(Game game);
+    
+    public void deleteGame(Game game);
+    
+    public List<Game> listGames();
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package view.user;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+import model.entity.User;
+
+/**
+ *
+ * @author juanito
+ */
+public class UserTableModel implements TableModel {
+    
+    private List<User> users = new ArrayList<User>();
+    private List<TableModelListener> tableListeners = new ArrayList<TableModelListener>();
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+        fireContentsChanged();
+    }
+
+    protected void fireContentsChanged() {
+        fireContentsChangedTableModel();
+    }
+
+    // TABLEMODEL METHODS
+    
+    @Override
+    public int getRowCount() {
+        return users.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 2;
+    }
+
+    @Override
+    public String getColumnName(int columnIndex) {
+        String name = null;
+        switch (columnIndex) {
+            case 0:
+                name = "Username";
+                break;
+            case 1:
+                name = "Email";
+                break;
+        }
+        return name;
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        Class c = null;
+        switch (columnIndex) {
+            case 0:
+                c=String.class;
+                break;
+            case 1:
+                c = String.class;
+                break;
+        }
+        return c;
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        User user = users.get(rowIndex);
+        Object value = null;
+        switch (columnIndex) {
+            case 0:
+                value = user.getUsername();
+                break;
+            case 1:
+                value = user.getEmail();
+                break;
+        }
+        return value;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void addTableModelListener(TableModelListener l) {
+        tableListeners.add(l);
+    }
+
+    @Override
+    public void removeTableModelListener(TableModelListener l) {
+        tableListeners.remove(l);
+    }
+    
+    protected void fireContentsChangedTableModel() {
+        TableModelEvent event = new TableModelEvent(this, 0, this.getRowCount() - 1, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT);
+        
+        ArrayList<TableModelListener> copyListeners = new ArrayList<>(tableListeners);
+        for (TableModelListener listener : copyListeners) {
+            listener.tableChanged(event);
+        }
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
+package view.user;
+
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author juanito
+ */
+public class UserViewImplInternal extends javax.swing.JPanel {
+
+    private UserViewImpl view;
+    
+    /**
+     * Creates new form UserViewImplInternal
+     */
+    public UserViewImplInternal(UserViewImpl view) {
+        this.view = view;
+        initComponents();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        usernameTextField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        emailTextField = new javax.swing.JTextField();
+        addButton = new javax.swing.JButton();
+        modifyButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+
+        jLabel1.setText("Username:");
+
+        jLabel2.setText("Email:");
+
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        modifyButton.setText("Modify");
+        modifyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(41, 41, 41)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(emailTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                                    .addComponent(usernameTextField))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(addButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                        .addComponent(modifyButton)
+                        .addGap(55, 55, 55)
+                        .addComponent(deleteButton)
+                        .addGap(85, 85, 85))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(62, 62, 62)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addButton)
+                    .addComponent(modifyButton)
+                    .addComponent(deleteButton))
+                .addGap(39, 39, 39))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        try {
+            String username = this.usernameTextField.getText();
+            String email = this.emailTextField.getText();
+            
+            view.fireSetUserGesture(username, email);
+            
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
+        try {
+            String id = view.getSelectedUserId();
+            
+            if(id == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, select an user from the table clicking on it.", "Warning", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            String username = this.usernameTextField.getText();
+            String email = this.emailTextField.getText();
+            
+            view.fireUpdateUserGesture(id, username, email);
+            
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_modifyButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        try {
+            String id = view.getSelectedUserId();
+            
+            if(id == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, select an user from the table clicking on it.", "Warning", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            String username = this.usernameTextField.getText();
+            String email = this.emailTextField.getText();
+            
+            view.fireDeleteUserGesture(id, username, email);
+            
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JTextField emailTextField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton modifyButton;
+    private javax.swing.JTextField usernameTextField;
+    // End of variables declaration//GEN-END:variables
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
+package view.user;
+
+import controller.UserController;
+import model.entity.User;
+
+/**
+ *
+ * @author juanito
+ */
+public class UserViewImpl extends javax.swing.JPanel implements UserView {
+
+    private UserController controller;
+    
+    // swing attributes
+    private UserTableModel userTableModel;
+    private UserViewImplInternal userPanelInternal;
+    
+    /**
+     * Creates new form UserViewImpl
+     */
+    public UserViewImpl() {
+        userTableModel = new UserTableModel();
+        initComponents();
+        this.userPanelInternal = new UserViewImplInternal(this);
+        this.userPanel.add(this.userPanelInternal);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        usersTable = new javax.swing.JTable();
+        userPanel = new javax.swing.JPanel();
+
+        usersTable.setModel(userTableModel);
+        jScrollPane1.setViewportView(usersTable);
+
+        userPanel.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    @Override
+    public UserController getController() {
+        return controller;
+    }
+
+    @Override
+    public void setController(UserController controller) {
+        this.controller = controller;
+    }
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel userPanel;
+    private javax.swing.JTable usersTable;
+    // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void dataModelChanged() {
+        userTableModel.setUsers(this.getController().listUsersGesture());
+    }
+    
+    @Override
+    public void display() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                dataModelChanged();
+            }
+        });
+    }
+    
+    public void fireSetUserGesture(String username, String email){
+        this.getController().setUserGesture(username, email);
+    }
+    
+    public String getSelectedUserId(){
+        int selectedRow = this.usersTable.getSelectedRow();
+        
+        // no row selected
+        if(selectedRow == -1){
+            return null;
+        }
+        
+        User selectedUser = this.userTableModel.getUsers().get(selectedRow);
+        
+        return String.valueOf(selectedUser.getId());
+    }
+    
+    public void fireUpdateUserGesture(String id, String username, String email){
+        this.getController().updateUserGesture(id, username, email);
+    }
+    
+    public void fireDeleteUserGesture(String id, String username, String email){
+        this.getController().deleteUserGesture(id, username, email);
+    }
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package view.user;
+
+import controller.UserController;
+
+/**
+ *
+ * @author juanito
+ */
+public interface UserView {
+    
+    public UserController getController();
+    
+    public void setController(UserController controller);
+    
+    public void display();
+    
+    public void dataModelChanged();
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package view.game;
+
+import controller.GameController;
+
+/**
+ *
+ * @author juanito
+ */
+public interface GameView {
+    
+    public GameController getController();
+    
+    public void setController(GameController controller);
+    
+    public void dataModelChanged();
+    
+    public void display();
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
+package view.game;
+
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameViewImplInternal extends javax.swing.JPanel {
+
+    private GameViewImpl view;
+    
+    /**
+     * Creates new form GameViewImplInternal
+     */
+    public GameViewImplInternal(GameViewImpl view) {
+        this.view = view;
+        initComponents();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        titleTextField = new javax.swing.JTextField();
+        studioTextField = new javax.swing.JTextField();
+        launchYearTextField = new javax.swing.JTextField();
+        addButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        modifyButton = new javax.swing.JButton();
+
+        jLabel1.setText("Title:");
+
+        jLabel2.setText("Studio:");
+
+        jLabel3.setText("Launch Year:");
+
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        modifyButton.setText("Modify");
+        modifyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(addButton)
+                        .addGap(63, 63, 63)
+                        .addComponent(modifyButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                        .addComponent(deleteButton))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(studioTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(titleTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(launchYearTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(74, 74, 74))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(studioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(launchYearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addButton)
+                    .addComponent(deleteButton)
+                    .addComponent(modifyButton))
+                .addGap(28, 28, 28))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        try {
+            String title = this.titleTextField.getText();
+            String studio = this.studioTextField.getText();
+            String launchYear = this.launchYearTextField.getText();
+            
+            view.fireSetGameGesture(title, studio, launchYear);
+            
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
+        try {
+            String id = view.getSelectedGameId();
+            
+            if(id == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, select a game from the table clicking on it.", "Warning", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            String title = this.titleTextField.getText();
+            String studio = this.studioTextField.getText();
+            String launchYear = this.launchYearTextField.getText();
+            
+            view.fireUpdateGameGesture(id, title, studio, launchYear);
+            
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_modifyButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        try {
+            String id = view.getSelectedGameId();
+            
+            if(id == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, select a game from the table clicking on it.", "Warning", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            String title = this.titleTextField.getText();
+            String studio = this.studioTextField.getText();
+            String launchYear = this.launchYearTextField.getText();
+            
+            view.fireDeleteGameGesture(id, title, studio, launchYear);
+            
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField launchYearTextField;
+    private javax.swing.JButton modifyButton;
+    private javax.swing.JTextField studioTextField;
+    private javax.swing.JTextField titleTextField;
+    // End of variables declaration//GEN-END:variables
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
+package view.game;
+
+import controller.GameController;
+import model.entity.Game;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameViewImpl extends javax.swing.JPanel implements GameView {
+
+    
+    private GameController controller;
+    
+    private GameTableModel gameTableModel;
+    private GameViewImplInternal gamePanelInternal;
+    
+    /**
+     * Creates new form GameViewImpl
+     */
+    public GameViewImpl() {
+        this.gameTableModel = new GameTableModel();
+        initComponents();
+        this.gamePanelInternal = new GameViewImplInternal(this);
+        this.gamePanel.add(this.gamePanelInternal);
+        
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gameTable = new javax.swing.JTable();
+        gamePanel = new javax.swing.JPanel();
+
+        gameTable.setModel(gameTableModel);
+        jScrollPane1.setViewportView(gameTable);
+
+        gamePanel.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    @Override
+    public GameController getController() {
+        return controller;
+    }
+
+    @Override
+    public void setController(GameController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void dataModelChanged() {
+        gameTableModel.setGames(this.getController().listGamesGesture());
+    }
+    
+    @Override
+    public void display() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                dataModelChanged();
+            }
+        });
+    }
+    
+    public void fireSetGameGesture(String title, String studio, String launchYear){
+        this.getController().setGameGesture(title, studio, launchYear);
+    }
+    
+    public String getSelectedGameId(){
+        int selectedRow = this.gameTable.getSelectedRow();
+        
+        // no row selected
+        if(selectedRow == -1){
+            return null;
+        }
+        
+        Game selectedGame = this.gameTableModel.getGames().get(selectedRow);
+        
+        return String.valueOf(selectedGame.getId());
+    }
+    
+    public void fireUpdateGameGesture(String id, String title, String studio, String launchYear){
+        this.getController().updateGameGesture(id, title, studio, launchYear);
+    }
+    
+    public void fireDeleteGameGesture(String id, String title, String studio, String launchYear){
+        this.getController().deleteGameGesture(id, title, studio, launchYear);
+    }
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel gamePanel;
+    private javax.swing.JTable gameTable;
+    private javax.swing.JScrollPane jScrollPane1;
+    // End of variables declaration//GEN-END:variables
+
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package view.game;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+import model.entity.Game;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameTableModel implements TableModel {
+    
+    private List<Game> games = new ArrayList<Game>();
+    private List<TableModelListener> tableListeners = new ArrayList<TableModelListener>();
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
+        fireContentsChanged();
+    }
+
+    protected void fireContentsChanged() {
+        fireContentsChangedTableModel();
+    }
+
+    // TABLEMODEL METHODS
+    
+    @Override
+    public int getRowCount() {
+        return games.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 3;
+    }
+
+    @Override
+    public String getColumnName(int columnIndex) {
+        String name = null;
+        switch (columnIndex) {
+            case 0:
+                name = "Title";
+                break;
+            case 1:
+                name = "Studio";
+                break;
+            case 2:
+                name = "Launch Year";
+        }
+        return name;
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        Class c = null;
+        switch (columnIndex) {
+            case 0:
+                c= String.class;
+                break;
+            case 1:
+                c = String.class;
+                break;
+            case 2:
+                c = Integer.class;
+        }
+        return c;
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Game game = games.get(rowIndex);
+        Object value = null;
+        switch (columnIndex) {
+            case 0:
+                value = game.getTitle();
+                break;
+            case 1:
+                value = game.getStudio();
+                break;
+            case 2:
+                value = game.getLaunchYear();
+        }
+        return value;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void addTableModelListener(TableModelListener l) {
+        tableListeners.add(l);
+    }
+
+    @Override
+    public void removeTableModelListener(TableModelListener l) {
+        tableListeners.remove(l);
+    }
+    
+    protected void fireContentsChangedTableModel() {
+        TableModelEvent event = new TableModelEvent(this, 0, this.getRowCount() - 1, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT);
+        
+        ArrayList<TableModelListener> copyListeners = new ArrayList<>(tableListeners);
+        for (TableModelListener listener : copyListeners) {
+            listener.tableChanged(event);
+        }
+    }
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
+package view.gametrack;
+
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import model.entity.Game;
+import model.entity.GameTrack;
+import model.entity.Platform;
+import model.entity.User;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameTrackViewImplInternal extends javax.swing.JPanel {
+
+    private GameTrackViewImpl view;
+    
+    private PlatformComboModel platformComboModel;
+    private UserComboModel userComboModel;
+    private GameComboModel gameComboModel;
+    
+    public GameTrackViewImplInternal(GameTrackViewImpl view) {
+        this.view = view;
+        this.platformComboModel = PlatformComboModel.create();
+        this.userComboModel = UserComboModel.create();
+        this.gameComboModel = GameComboModel.create();
+        initComponents();
+        this.platformComboBox.setModel(this.platformComboModel);
+        this.userComboBox.setModel(this.userComboModel);
+        this.gameComboBox.setModel(this.gameComboModel);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        userComboBox = new javax.swing.JComboBox<>();
+        gameComboBox = new javax.swing.JComboBox<>();
+        platformComboBox = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        playedHoursTextField = new javax.swing.JTextField();
+        progressComboBox = new javax.swing.JComboBox<>();
+        addButton = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
+
+        jLabel1.setText("Game:");
+
+        jLabel2.setText("User:");
+
+        jLabel3.setText("Platform:");
+
+        userComboBox.setModel(userComboModel);
+
+        gameComboBox.setModel(gameComboModel);
+
+        platformComboBox.setModel(platformComboModel);
+
+        jLabel4.setText("Played Hours:");
+
+        jLabel5.setText("Progress:");
+
+        progressComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Playing", "Played", "Finished", "Completed", "Abandoned", "Wishlist" }));
+
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(7, 7, 7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3))
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(gameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(userComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(platformComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(240, 240, 240)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(progressComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(playedHoursTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(userComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(playedHoursTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(gameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(progressComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(platformComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addButton)
+                    .addComponent(updateButton))
+                .addContainerGap(96, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        try {
+            User user = (User)this.userComboBox.getSelectedItem();
+            Game game = (Game)this.gameComboBox.getSelectedItem();
+            Platform platform = (Platform)this.platformComboBox.getSelectedItem();
+            String playedHours = this.playedHoursTextField.getText();
+            String progress = this.progressComboBox.getSelectedItem().toString();
+            
+            String userId = String.valueOf(user.getId());
+            String gameId = String.valueOf(game.getId());
+            String platformId = String.valueOf(platform.getId());
+
+            view.fireSetTrackGesture(userId, gameId, platformId, progress, playedHours);
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        }     
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        try {
+            String id = view.getSelectedTrackId();
+            
+            if(id == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, select a track clicking on it.", "Warning", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            User user = (User)this.userComboBox.getSelectedItem();
+            Game game = (Game)this.gameComboBox.getSelectedItem();
+            Platform platform = (Platform)this.platformComboBox.getSelectedItem();
+            String playedHours = this.playedHoursTextField.getText();
+            String progress = this.progressComboBox.getSelectedItem().toString();
+            
+            if (playedHours.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please, introduce the game's played hours.", "Warning", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            String userId = String.valueOf(user.getId());
+            String gameId = String.valueOf(game.getId());
+            String platformId = String.valueOf(platform.getId());
+
+            view.fireUpdateTrackGesture(id, userId, gameId, platformId, progress, playedHours);
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(new JInternalFrame(), e, "Warning", JOptionPane.WARNING_MESSAGE);
+        } 
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    
+    // filling combobox method
+    public void loadSelectedTrack(GameTrack track) {
+        this.playedHoursTextField.setText(String.valueOf(track.getPlayedHours()));
+        this.progressComboBox.setSelectedItem(track.getProgress());
+        
+        for (int i = 0; i < userComboModel.getSize(); i++) {
+            User u = (User) userComboModel.getElementAt(i);
+            if (u.getId() == track.getUser().getId()) {
+                this.userComboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+        
+        for (int i = 0; i < gameComboModel.getSize(); i++) {
+            Game g = (Game) gameComboModel.getElementAt(i);
+            if (g.getId() == track.getGame().getId()) {
+                this.gameComboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+        
+        for (int i = 0; i < platformComboModel.getSize(); i++) {
+            Platform p = (Platform) platformComboModel.getElementAt(i);
+            if (p.getId() == track.getPlatform().getId()) {
+                this.platformComboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JComboBox<String> gameComboBox;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> platformComboBox;
+    private javax.swing.JTextField playedHoursTextField;
+    private javax.swing.JComboBox<String> progressComboBox;
+    private javax.swing.JButton updateButton;
+    private javax.swing.JComboBox<String> userComboBox;
+    // End of variables declaration//GEN-END:variables
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package view.gametrack;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ComboBoxModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import model.entity.Game;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameComboModel implements ComboBoxModel {
+    
+    private List<Game> games = new ArrayList<Game>();
+    private List<ListDataListener> dataListeners = new ArrayList<ListDataListener>();
+    private Game gameSelected = null;
+
+    // singleton
+    private static GameComboModel model=null;
+
+    private GameComboModel(){}
+
+    public static GameComboModel create(){
+        if(model==null)
+            model=new GameComboModel();
+        return model;
+    }
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
+        this.gameSelected = null;
+        fireContentsChanged();
+    }
+
+    protected void fireContentsChanged() {
+        fireContentsChangedListData();
+    }
+    
+    // comboBox methods
+
+    public void setSelectedItem(Object anItem) {
+        if (anItem != null) {
+            gameSelected = (Game) anItem;
+            fireContentsChangedListData();
+        }
+    }
+
+    public Object getSelectedItem() {
+        return gameSelected;
+    }
+
+    public int getSize() {
+        return games.size();
+    }
+
+    public Object getElementAt(int index) {
+        return games.get(index);
+    }
+
+    public void addListDataListener(ListDataListener l) {
+        dataListeners.add(l);
+    }
+
+    public void removeListDataListener(ListDataListener l) {
+        dataListeners.remove(l);
+    }
+
+    protected void fireContentsChangedListData() {
+        ListDataEvent e = new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, 0, games.size());
+        
+        ArrayList<ListDataListener> copyListeners = new ArrayList<>(dataListeners);
+        for (ListDataListener l : copyListeners) {
+            l.contentsChanged(e);
+        }
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package view.gametrack;
+
+import controller.GameTrackController;
+
+/**
+ *
+ * @author juanito
+ */
+public interface GameTrackView {
+    
+    public GameTrackController getController();
+    
+    public void setController(GameTrackController controller);
+    
+    public void dataModelChanged();
+    
+    public void display();
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package view.gametrack;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ComboBoxModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import model.entity.User;
+
+/**
+ *
+ * @author juanito
+ */
+public class UserComboModel implements ComboBoxModel {
+    
+    private List<User> users = new ArrayList<User>();
+    private List<ListDataListener> dataListeners = new ArrayList<ListDataListener>();
+    private User userSelected = null;
+
+    // singleton
+    private static UserComboModel model=null;
+
+    private UserComboModel(){}
+
+    public static UserComboModel create(){
+        if(model==null)
+            model=new UserComboModel();
+        return model;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+        this.userSelected = null;
+        fireContentsChanged();
+    }
+
+    protected void fireContentsChanged() {
+        fireContentsChangedListData();
+    }
+    
+    // comboBox methods
+
+    public void setSelectedItem(Object anItem) {
+        if (anItem != null) {
+            userSelected = (User) anItem;
+            fireContentsChangedListData();
+        }
+    }
+
+    public Object getSelectedItem() {
+        return userSelected;
+    }
+
+    public int getSize() {
+        return users.size();
+    }
+
+    public Object getElementAt(int index) {
+        return users.get(index);
+    }
+
+    public void addListDataListener(ListDataListener l) {
+        dataListeners.add(l);
+    }
+
+    public void removeListDataListener(ListDataListener l) {
+        dataListeners.remove(l);
+    }
+
+    protected void fireContentsChangedListData() {
+        ListDataEvent e = new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, 0, users.size());
+        
+        ArrayList<ListDataListener> copyListeners = new ArrayList<>(dataListeners);
+        for (ListDataListener l : copyListeners) {
+            l.contentsChanged(e);
+        }
+    }
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package view.gametrack;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+import model.entity.GameTrack;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameTrackTableModel implements TableModel {
+    
+    private List<GameTrack> tracks = new ArrayList<GameTrack>();
+    private List<TableModelListener> tableListeners = new ArrayList<TableModelListener>();
+
+    public List<GameTrack> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(List<GameTrack> tracks) {
+        this.tracks = tracks;
+        fireContentsChanged();
+    }
+
+    protected void fireContentsChanged() {
+        fireContentsChangedTableModel();
+    }
+    //--------------- MÉTODOS PROPIOS DE TableModel -------------------------
+
+    public GameTrack getRow(int indexRow) {
+        return tracks.get(indexRow);
+    }
+
+    public int getRowCount() {
+        return tracks.size();
+    }
+
+    public int getColumnCount() {
+        return 5; //ya que tendremos tres valores a mostrar por cliente
+    }
+
+    public String getColumnName(int columnIndex) {
+        String name = null;
+        switch (columnIndex) {
+            case 0:
+                name = "User";
+                break;
+            case 1:
+                name = "Game";
+                break;
+            case 2:
+                name = "Platform";
+                break;
+            case 3:
+                name = "Played Hours";
+                break;
+            case 4:
+                name = "Progress";
+                break;
+        }
+        return name;
+    }
+
+    public Class<?> getColumnClass(int columnIndex) {
+        Class c = null;
+        switch (columnIndex) {
+            case 0:
+                c = String.class;
+                break;
+            case 1:
+                c = String.class;
+                break;
+            case 2:
+                c = String.class;
+                break;
+            case 3:
+                c = Double.class;
+                break;
+            case 4:
+                c = String.class;
+                break;
+        }
+        return c;
+    }
+
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false; //No permito editar celdas
+    }
+
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        GameTrack track = tracks.get(rowIndex);
+        Object value = null;
+        switch (columnIndex) {
+            case 0:
+                value = track.getUser().getUsername();
+                break;
+            case 1:
+                value = track.getGame().getTitle();
+                break;
+            case 2:
+                value = track.getPlatform().getPlatform();
+                break;
+            case 3:
+                value = track.getPlayedHours();
+                break;
+            case 4:
+                value = track.getProgress();
+                break;
+        }
+        return value;
+
+    }
+
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void addTableModelListener(TableModelListener l) {
+        tableListeners.add(l);
+    }
+
+    public void removeTableModelListener(TableModelListener l) {
+        tableListeners.remove(l);
+    }
+
+    protected void fireContentsChangedTableModel() {
+        
+        TableModelEvent event = new TableModelEvent(this);
+        for (TableModelListener listener : tableListeners) {
+            listener.tableChanged(event);
+        }
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package view.gametrack;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ComboBoxModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import model.entity.Platform;
+
+/**
+ *
+ * @author juanito
+ */
+public class PlatformComboModel implements ComboBoxModel {
+    
+    private List<Platform> platforms = new ArrayList<Platform>();
+    private List<ListDataListener> dataListeners = new ArrayList<ListDataListener>();
+    private Platform platformSelected = null;
+
+    // singleton
+    private static PlatformComboModel model=null;
+
+    private PlatformComboModel(){}
+
+    public static PlatformComboModel create(){
+        if(model==null)
+            model=new PlatformComboModel();
+        return model;
+    }
+
+    public List<Platform> getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(List<Platform> platforms) {
+        this.platforms = platforms;
+        this.platformSelected = null;
+        fireContentsChanged();
+    }
+
+    protected void fireContentsChanged() {
+        fireContentsChangedListData();
+    }
+    
+    // comboBox methods
+
+    public void setSelectedItem(Object anItem) {
+        if (anItem != null) {
+            platformSelected = (Platform) anItem;
+            fireContentsChangedListData();
+        }
+    }
+
+    public Object getSelectedItem() {
+        return platformSelected;
+    }
+
+    public int getSize() {
+        return platforms.size();
+    }
+
+    public Object getElementAt(int index) {
+        return platforms.get(index);
+    }
+
+    public void addListDataListener(ListDataListener l) {
+        dataListeners.add(l);
+    }
+
+    public void removeListDataListener(ListDataListener l) {
+        dataListeners.remove(l);
+    }
+
+    protected void fireContentsChangedListData() {
+        ListDataEvent e = new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, 0, platforms.size());
+        
+        ArrayList<ListDataListener> copyListeners = new ArrayList<>(dataListeners);
+        for (ListDataListener l : copyListeners) {
+            l.contentsChanged(e);
+        }
+    }
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
+package view.gametrack;
+
+import controller.GameTrackController;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import model.entity.GameTrack;
+
+/**
+ *
+ * @author juanito
+ */
+public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackView {
+
+    private GameTrackController controller;
+    
+    private GameTrackTableModel gameTrackTableModel;
+    private GameTrackViewImplInternal gameTrackPanelInternal;
+    
+    /**
+     * Creates new form GameTrackViewImpl
+     */
+    public GameTrackViewImpl() {
+        this.gameTrackTableModel = new GameTrackTableModel();
+        initComponents();
+        this.gameTrackPanelInternal = new GameTrackViewImplInternal(this);
+        this.gameTrackPanel.add(this.gameTrackPanelInternal);
+        
+        // listens to selection changes in table
+        this.trackTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    int selectedRow = trackTable.getSelectedRow();
+                    if (selectedRow != -1) {
+                        GameTrack selectedTrack = gameTrackTableModel.getRow(selectedRow);
+                        gameTrackPanelInternal.loadSelectedTrack(selectedTrack);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        trackTable = new javax.swing.JTable();
+        gameTrackPanel = new javax.swing.JPanel();
+
+        trackTable.setModel(gameTrackTableModel);
+        jScrollPane1.setViewportView(trackTable);
+
+        gameTrackPanel.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(gameTrackPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(gameTrackPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    @Override
+    public GameTrackController getController() {
+        return controller;
+    }
+
+    @Override
+    public void setController(GameTrackController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void dataModelChanged() {
+        gameTrackTableModel.setTracks(this.getController().listTracksGesture());
+    }
+    
+    @Override
+    public void display() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                dataModelChanged();
+            }
+        });
+    }
+    
+    public void fireSetTrackGesture(String userId, String gameId, String platformId, String progress, String playedHours){
+        this.controller.setTrackGesture(userId, gameId, platformId, progress, playedHours);
+    }
+    
+    public String getSelectedTrackId(){
+        int selectedRow = this.trackTable.getSelectedRow();
+        
+        // no row selected
+        if(selectedRow == -1){
+            return null;
+        }
+        
+        GameTrack selectedTrack = this.gameTrackTableModel.getTracks().get(selectedRow);
+        
+        return String.valueOf(selectedTrack.getId());
+    }
+    
+    public void fireUpdateTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours){
+        this.controller.updateTrackGesture(id, userId, gameId, platformId, progress, playedHours);
+    }
+    
+    // not implemented yet
+    public void fireDeleteTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours){
+        this.controller.deleteTrackGesture(id, userId, gameId, platformId, progress, playedHours);
+    }
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel gameTrackPanel;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable trackTable;
+    // End of variables declaration//GEN-END:variables
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package view;
+
+import javax.swing.JPanel;
+import view.game.GameView;
+import view.gametrack.GameTrackView;
+import view.user.UserView;
+
+/**
+ *
+ * @author juanito
+ */
+public class MainView extends javax.swing.JFrame {
+
+    private UserView userView;
+    private GameView gameView;
+    private GameTrackView gameTrackView;
+    
+    public MainView(UserView userView, GameView gameView, GameTrackView gameTrackView) {
+        this.userView = userView;
+        this.gameView = gameView;
+        this.gameTrackView = gameTrackView;
+        initComponents();
+        
+        // remove trash windows
+        this.jTabbedPane1.removeAll();
+        
+        this.jTabbedPane1.add("User Profiles", (JPanel)userView);
+        this.jTabbedPane1.add("Game Catalog", (JPanel)gameView);
+        this.jTabbedPane1.add("My Log", (JPanel)gameTrackView);
+        
+        this.setTitle("GameLog - Personal Gaming Tracker");
+        
+        // start with gameTrack view
+        this.jTabbedPane1.setSelectedIndex(2);
+        
+        this.pack();
+        this.setLocationRelativeTo(null); // center window on screen
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        
+    }
+    
+    public void display(){
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                setVisible(true);
+                gameTrackView.display();
+                userView.display();
+                gameView.display();
+                
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane jTabbedPane1;
+    // End of variables declaration//GEN-END:variables
+}
+
