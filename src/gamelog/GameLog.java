@@ -60,6 +60,7 @@ public class GameLog {
         // GAMES
         GameModel gameModel = new GameModelImpl();
         
+        // models
         GameTableModel gameTableModel = new GameTableModel();
         GameComboModel gameComboModel = GameComboModel.create();
         
