@@ -1,4 +1,4 @@
-# GameLog 🎮
+# GameLog 
 
 A desktop application built with Java and Swing to manage, track, and log your personal video game collection. Implements a strict Model-View-Controller (MVC) architecture.
 
@@ -13,7 +13,8 @@ A desktop application built with Java and Swing to manage, track, and log your p
 * **GUI Framework:** Java Swing
 * **Architecture:** MVC (Model-View-Controller)
 * **Database:** MySQL
-* **Dependencies:** * MySQL Connector/J (JDBC driver for database connection)
+* **Dependencies:**
+  * MySQL Connector/J (JDBC driver for database connection)
   * Java Swing Layout (for UI component positioning)
 
 ## Prerequisites
