@@ -7,7 +7,9 @@ package controller;
 import java.util.List;
 import model.GameModel;
 import model.entity.Game;
+import view.game.GameTableModel;
 import view.game.GameView;
+import view.gametrack.GameComboModel;
 
 /**
  *
@@ -20,7 +22,7 @@ public interface GameController {
     public void setModel(GameModel model);
     
     // bind model to view
-    public void setup(GameModel model, List<GameView> views);
+    public void setup(GameModel model, GameTableModel tableModel, GameComboModel comboModel, List<GameView> views);
     
     public void start();
     

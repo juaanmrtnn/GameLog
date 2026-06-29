@@ -9,7 +9,9 @@ import java.util.List;
 import model.GameModel;
 import model.entity.Game;
 import model.entity.GameImpl;
+import view.game.GameTableModel;
 import view.game.GameView;
+import view.gametrack.GameComboModel;
 
 /**
  *
@@ -18,6 +20,8 @@ import view.game.GameView;
 public class GameControllerImpl implements GameController {
     
     private GameModel model;
+    private GameTableModel tableModel;
+    private GameComboModel comboModel;
     private List<GameView> views;
 
     public GameControllerImpl() {
@@ -36,14 +40,20 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void setup(GameModel model, List<GameView> views) {
+    public void setup(GameModel model, GameTableModel tableModel, GameComboModel comboModel, List<GameView> views) {
         this.setModel(model);
         model.setController(this);
+        this.tableModel = tableModel;
+        this.comboModel = comboModel;
         this.addViews(views);
     }
 
     @Override
     public void start() {
+        List<Game> games = this.model.listGames();
+        this.tableModel.setGames(games);
+        this.comboModel.setGames(games);
+        
         for(GameView view : views){
             view.display();
         }
@@ -96,6 +106,10 @@ public class GameControllerImpl implements GameController {
     
     @Override
     public void fireDataModelChanged() {
+        List<Game> games = this.model.listGames();
+        this.tableModel.setGames(games);
+        this.comboModel.setGames(games);
+        
         for (GameView v: this.views) {
             v.display();
         }
