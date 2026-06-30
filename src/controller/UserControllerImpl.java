@@ -9,6 +9,8 @@ import java.util.List;
 import model.UserModel;
 import model.entity.User;
 import model.entity.UserImpl;
+import view.gametrack.UserComboModel;
+import view.user.UserTableModel;
 import view.user.UserView;
 
 /**
@@ -18,6 +20,8 @@ import view.user.UserView;
 public class UserControllerImpl implements UserController {
     
     private UserModel model;
+    private UserTableModel tableModel;
+    private UserComboModel comboModel;
     private List<UserView> views;
     
     public UserControllerImpl(){
@@ -35,8 +39,10 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public void setup(UserModel model, List<UserView> views) {
+    public void setup(UserModel model, UserTableModel tableModel, UserComboModel comboModel, List<UserView> views) {
         this.setModel(model);
+        this.tableModel = tableModel;
+        this.comboModel = comboModel;
         model.setController(this);
         this.addViews(views);
         
@@ -44,6 +50,10 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public void start() {
+        List<User> users = this.model.listUsers();
+        this.tableModel.setUsers(users);
+        this.comboModel.setUsers(users);
+        
         for(UserView view : views){
             view.display();
         }
@@ -104,6 +114,9 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public void fireDataModelChanged() {
+        List<User> users = this.model.listUsers();
+        this.tableModel.setUsers(users);
+        this.comboModel.setUsers(users);
         for (UserView v: this.views) {
             v.display();
         }

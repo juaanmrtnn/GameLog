@@ -7,6 +7,8 @@ package controller;
 import java.util.List;
 import model.UserModel;
 import model.entity.User;
+import view.gametrack.UserComboModel;
+import view.user.UserTableModel;
 import view.user.UserView;
 
 /**
@@ -20,7 +22,7 @@ public interface UserController {
     public void setModel(UserModel model);
     
     // bind model to view
-    public void setup(UserModel model, List<UserView> views);
+    public void setup(UserModel model, UserTableModel tableModel, UserComboModel comboModel, List<UserView> views);
     
     public void start();
     
