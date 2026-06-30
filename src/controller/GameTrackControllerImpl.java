@@ -13,6 +13,7 @@ import model.entity.GameTrack;
 import model.entity.GameTrackImpl;
 import model.entity.PlatformImpl;
 import model.entity.UserImpl;
+import view.gametrack.GameTrackTableModel;
 import view.gametrack.GameTrackView;
 
 /**
@@ -22,6 +23,7 @@ import view.gametrack.GameTrackView;
 public class GameTrackControllerImpl implements GameTrackController {
     
     private GameTrackModel model;
+    private GameTrackTableModel tableModel;
     private List<GameTrackView> views;
     
     public GameTrackControllerImpl(){
@@ -39,14 +41,17 @@ public class GameTrackControllerImpl implements GameTrackController {
     }
 
     @Override
-    public void setup(GameTrackModel model, List<GameTrackView> views) {
+    public void setup(GameTrackModel model, GameTrackTableModel tableModel, List<GameTrackView> views) {
         this.setModel(model);
         model.setController(this);
+        this.tableModel = tableModel;
         this.addViews(views);
     }
 
     @Override
     public void start() {
+        List<GameTrack> tracks = this.model.listTracks();
+        this.tableModel.setTracks(tracks);
         for(GameTrackView v : views){
             v.display();
         }

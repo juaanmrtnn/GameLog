@@ -27,6 +27,7 @@ import view.game.GameTableModel;
 import view.game.GameView;
 import view.game.GameViewImpl;
 import view.gametrack.GameComboModel;
+import view.gametrack.GameTrackTableModel;
 import view.gametrack.GameTrackView;
 import view.gametrack.GameTrackViewImpl;
 import view.gametrack.PlatformComboModel;
@@ -78,13 +79,16 @@ public class GameLog {
         
         // GAME TRACKS
         GameTrackModel gameTrackModel = new GameTrackModelImpl();
+        GameTrackTableModel gameTrackTableModel = new GameTrackTableModel();
         
         GameTrackView gameTrackView1 = new GameTrackViewImpl();
         List<GameTrackView> gameTrackViews = new ArrayList<>();
         gameTrackViews.add(gameTrackView1);
         
         GameTrackController gameTrackController = new GameTrackControllerImpl();
-        gameTrackController.setup(gameTrackModel, gameTrackViews);
+        gameTrackController.setup(gameTrackModel, gameTrackTableModel, gameTrackViews);
+        
+        gameTrackController.start();
         
         // PLATFORMS
         PlatformModel platformModel = new PlatformModelImpl();

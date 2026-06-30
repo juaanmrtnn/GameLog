@@ -7,6 +7,7 @@ package controller;
 import java.util.List;
 import model.GameTrackModel;
 import model.entity.GameTrack;
+import view.gametrack.GameTrackTableModel;
 import view.gametrack.GameTrackView;
 
 /**
@@ -20,7 +21,7 @@ public interface GameTrackController {
     public void setModel(GameTrackModel model);
     
     // bind model to view
-    public void setup(GameTrackModel model, List<GameTrackView> views);
+    public void setup(GameTrackModel model, GameTrackTableModel tableModel, List<GameTrackView> views);
     
     public void start();
     
