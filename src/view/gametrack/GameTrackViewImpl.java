@@ -130,8 +130,8 @@ public class GameTrackViewImpl extends javax.swing.JPanel implements GameTrackVi
     }
     
     // not implemented yet
-    public void fireDeleteTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours){
-        this.controller.deleteTrackGesture(id, userId, gameId, platformId, progress, playedHours);
+    public void fireDeleteTrackGesture(String id){
+        this.controller.deleteTrackGesture(id);
     }
 
 

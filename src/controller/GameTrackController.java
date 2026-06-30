@@ -35,7 +35,7 @@ public interface GameTrackController {
     
     public void updateTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours);
     
-    public void deleteTrackGesture(String id, String userId, String gameId, String platformId, String progress, String playedHours);
+    public void deleteTrackGesture(String id);
     
     public List<GameTrack> listTracksGesture();
     
